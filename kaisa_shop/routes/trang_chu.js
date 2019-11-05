@@ -5,7 +5,9 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('trang_chu', { title: 'KaiSa Shop' });
 });
-
+router.get('/index.html', function(req, res, next) {
+  res.render('trang_chu', { title: 'KaiSa Shop' });
+});
 
 
 

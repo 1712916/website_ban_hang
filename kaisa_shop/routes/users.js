@@ -42,5 +42,9 @@ router.get('/lien_he', function(req, res, next) {
   //res.send('user/san_pham');
   res.render('./user/lien_he/lien_he', { title: 'Liên Hệ' });
 });
+router.get('/tim_kiem', function(req, res, next) {
+  //res.send('user/san_pham');
+  res.render('./user/tim_kiem', { title: 'Tìm kiếm' });
+});
 
 module.exports = router;
