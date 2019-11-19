@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose=require('mongoose'); 
+const dtbName = 'kaisaShop'
+const url = "mongodb+srv://bossxomlut:123123qweqwe@cluster0-ajqhs.gcp.mongodb.net/" + dtbName + "?retryWrites=true&w=majority";
 
 
 
@@ -11,6 +14,16 @@ var usersRouter = require('./routes/users');
 var vinhRouter = require('./routes/vinh');
 const hbs = require('hbs');
 var app = express();
+
+//kết nối đến database
+mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true }).then(
+  () => {
+    console.log('Thông báo: Kết nối tới Database thành công (^_^)\n');
+  },
+  err => { /** handle initial connection error */
+    console.log('Thông báo: Kết nối tới Database thất bại (T_T)\n');
+  }
+);
 
 //this required before view engine setup
 hbs.registerPartials(__dirname + '/views');
