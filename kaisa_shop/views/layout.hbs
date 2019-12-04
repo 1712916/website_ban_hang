@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    {{{body}}}
-  </body>
+<html lang="en">
+<head>
+  
+  {{> elements/head_tag}}
+</head>
+<body>
+
+  {{> elements/header}}
+
+   {{{body}}}
+
+
+  {{> elements/footers}}
+
+
+  {{> elements/body_script}}
+ 
+</body>
 </html>
+
+
