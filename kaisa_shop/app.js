@@ -15,6 +15,7 @@ const url = process.env.URL_DATABASE;
 var indexRouter = require('./routes/trang_chu');
 var usersRouter = require('./routes/users');
 var vinhRouter = require('./routes/vinh');
+var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 const hbs = require('hbs');
 
 require('./config/passport'); //vượt qua passport để config trang đăng nhâp/đăng ký
@@ -56,6 +57,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/vinh',vinhRouter);
+app.use('/users', catalogRouter);  // Add catalog routes to middleware chain.
 
 
 // catch 404 and forward to error handler

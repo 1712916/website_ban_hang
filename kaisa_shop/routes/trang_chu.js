@@ -43,19 +43,8 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/chi_tiet_sp/:id', function (req, res, next) {
-  var id = req.params.id;
-
-  modelSanPham.findById(id, function (err, product) {
-    if (err) {
-      console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
-    } else {
-      console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
-      console.log(product);
-      res.render('./user/san_pham/danh_muc_san_pham/chi_tiet_san_pham/san_pham_1', { title: 'KaiSa Shop', data: product });
-    }
-
-  });
+router.get('/', function(req, res) {
+  res.redirect('/catalog');
 });
 
 module.exports = router;
