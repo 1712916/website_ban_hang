@@ -122,4 +122,6 @@ router.get('/tim_kiem', function(req, res, next) {
   res.render('./user/tim_kiem', { title: 'Tìm kiếm' });
 });
 
+
+
 module.exports = router;

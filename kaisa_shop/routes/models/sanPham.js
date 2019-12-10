@@ -10,7 +10,8 @@ const sanPhamSchema=new mongoose.Schema({
     hanSuDung:{type:Date},
     moTaSanPham:{type: String},
     tinhTrangSanPham:{type: Boolean},
-    ngayTaoSanPham:{type:Date}
+    ngayTaoSanPham:{type:Date},
+    mauSac:{type: String}
 },{collection:'sanPham'});
 
 module.exports=mongoose.model('sanPham',sanPhamSchema); 
