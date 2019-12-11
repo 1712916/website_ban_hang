@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	{{> elements/head_tag}}
+</head>
+
+<body>
+
+	{{> elements/header}}
+
+	<!--================Login Box Area =================-->
+	<section class="login_box_area section-margin">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="login_box_img">
+						<div class="hover">
+							<h4>Bạn đã có tài khoản</h4>
+							<p>Trải nghiệm không gian mua sắm tuyệt vời cùng chúng tôi ngay</p>
+							<a class="button button-account" href="/users/tai_khoan/dang_nhap">Đăng Nhập Ngay</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="login_form_inner register_form_inner">
+						<h3>Tạo Tài Khoản</h3>
+						<form class="row login_form" action="/users/tai_khoan/dang_ky" method="post" id="register_form">
+							{{#if hasErrors}}
+
+							<div class="col-md-12 form-group">
+								<label type="text" id="err" name="name"> 
+									<font color="red">
+									MESS: {{messages}}
+									</font>
+								</label>
+							</div>
+
+							{{/if}}
+
+							<div class="col-md-12 form-group">
+								<input type="email" class="form-control" id="email" name="email" placeholder="Email"
+									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="password" class="form-control" id="password" name="password"
+									placeholder="Mật khẩu" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'Password'">
+							</div>
+							{{!-- <div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="confirmPassword" name="confirmPassword"
+									placeholder="Xác nhận mật khẩu" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'Confirm Password'">
+							</div> --}}
+							<div class="col-md-12 form-group">
+								<div class="creat_account">
+									<input type="checkbox" id="f-option2" name="selector">
+									<label for="f-option2">Lưu mật khẩu</label>
+								</div>
+							</div>
+							<div class="col-md-12 form-group">
+								<button type="submit" value="submit" class="button button-register w-100">Đăng
+									Ký</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+
+	{{> elements/footers}}
+
+
+	{{> elements/body_script}}
+
+</body>
+
+</html>

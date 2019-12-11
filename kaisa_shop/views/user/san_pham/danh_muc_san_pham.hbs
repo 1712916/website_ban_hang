@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  {{> elements/head_tag}}
+
+</head>
+
+<body onload="updatePagination()">
+
+  {{> elements/header}}
+
+  <!-- ================ start banner area ================= -->
+  <section class="blog-banner-area" id="category">
+    <div class="container h-100">
+      <div class="blog-banner">
+        <div class="text-center">
+          <h1>Sản Phẩm Phân Loại</h1>
+          <nav aria-label="breadcrumb" class="banner-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Shop Category</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ================ end banner area ================= -->
+
+
+  <!-- ================ category section start ================= -->
+  <section class="section-margin--small mb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-5">
+          <div class="sidebar-categories">
+            <div class="head">Phân Loại</div>
+            <ul class="main-categories">
+              <li class="common-filter">
+                <form action="#">
+                  <ul>
+
+                    <li class="filter-list"> <input class="pixel-radio" type="radio" id="men" name="brand"><label
+                        for="men"><a href="/users/san_pham/danh_muc_san_pham/phan_loai/my_pham/1">Mỹ Phẩm</a><span>
+                          (3600)</span></label></li>
+                    <li class="filter-list"><input class="pixel-radio" type="radio" id="women" name="brand"><label
+                        for="women"><a href="/users/san_pham/danh_muc_san_pham/phan_loai/trang_tri/1">Trang Trí</a><span>
+                          (3600)</span></label></li>
+                    <li class="filter-list"><input class="pixel-radio" type="radio" id="accessories" name="brand"><label
+                        for="accessories"><a href="/users/san_pham/danh_muc_san_pham/phan_loai/phu_kien/1">Phụ
+                          Kiện</a><span> (3600)</span></label></li>
+                    <li class="filter-list"><input class="pixel-radio" type="radio" id="electronics" name="brand"><label
+                        for="electronics"><a href="/users/san_pham/danh_muc_san_pham/phan_loai/do_choi/1">Đồ
+                          Chơi</a><span> (3600)</span></label></li>
+
+                  </ul>
+                </form>
+              </li>
+            </ul>
+          </div>
+          <div class="sidebar-filter">
+            <div class="top-filter-head">Thương Hiệu</div>
+            <div class="common-filter">
+              <div class="head">Brands</div>
+              <form action="#">
+                <ul>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label
+                      for="apple"><a
+                        href="/users/san_pham/danh_muc_san_pham/thuong_hieu/apple/1">Apple</a><span>(29)</span></label>
+                  </li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="asus" name="brand"><label
+                      for="asus"><a
+                        href="/users/san_pham/danh_muc_san_pham/thuong_hieu/asus/1">Asus</a><span>(29)</span></label></li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="gionee" name="brand"><label
+                      for="gionee"><a
+                        href="/users/san_pham/danh_muc_san_pham/thuong_hieu/gionee/1">Gionee</a><span>(19)</span></label>
+                  </li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="micromax" name="brand"><label
+                      for="micromax"><a
+                        href="/users/san_pham/danh_muc_san_pham/thuong_hieu/micromax/1">Micromax</a><span>(19)</span></label>
+                  </li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="samsung" name="brand"><label
+                      for="samsung"><a
+                        href="/users/san_pham/danh_muc_san_pham/thuong_hieu/samsung/1">Samsung</a><span>(19)</span></label>
+                  </li>
+                </ul>
+              </form>
+            </div>
+            <div class="common-filter">
+              <div class="head">Màu Sắc</div>
+              <form action="#">
+                <ul>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="black" name="color"><label
+                      for="black"><a
+                        href="/users/san_pham/danh_muc_san_pham/mau_sac/black/1">Black</a><span>(29)</span></label></li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="balckleather" name="color"><label
+                      for="balckleather"><a href="/users/san_pham/danh_muc_san_pham/mau_sac/black_leather/1">Black
+                        Leather</a><span>(29)</span></label></li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="blackred" name="color"><label
+                      for="blackred"><a href="/users/san_pham/danh_muc_san_pham/mau_sac/black_with_red/1">Black with
+                        red</a><span>(19)</span></label></li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label
+                      for="gold"><a
+                        href="/users/san_pham/danh_muc_san_pham/mau_sac/gold/1">Gold</a><span>(19)</span></label></li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="spacegrey" name="color"><label
+                      for="spacegrey"><a href="/users/san_pham/danh_muc_san_pham/mau_sac/space_grey/1">Space
+                        grey</a><span>(19)</span></label></li>
+                </ul>
+              </form>
+            </div>
+            <div class="common-filter">
+              <div class="head">Giá</div>
+              <form action="#">
+                <ul>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="p1" name="price"><label
+                      for="p1"><a href="/users/san_pham/danh_muc_san_pham/gia/0-40000/1"> Nhỏ hơn 40000
+                      </a><span>(2)</span></label></li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="p2" name="price"><label
+                      for="p2"><a href="/users/san_pham/danh_muc_san_pham/gia/40000-100000/1">40000 -
+                        100000</a><span>(4)</span></label></li>
+                  <li class="filter-list"><input class="pixel-radio" type="radio" id="p3" name="price"><label
+                      for="p3"><a href="/users/san_pham/danh_muc_san_pham/gia/100000-Infinity/1">Lớn hơn
+                        100000</a><span>(2)</span></label></li>
+                </ul>
+              </form>
+              {{!-- <div class="price-range-area">
+                <div id="price-range"></div>
+                <div class="value-wrapper d-flex">
+                  <div class="price">Giá:</div>
+                  <span></span>
+                  <div id="lower-value"></div>
+                  <div class="to">to</div>
+                  <span></span>
+                  <div id="upper-value"></div>
+                </div>
+              </div> --}}
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-9 col-lg-8 col-md-7">
+          <!-- Start Filter Bar -->
+          <div class="filter-bar d-flex flex-wrap align-items-center">
+            <div class="sorting">
+              <select onchange="if (this.value) window.location.href=this.value">
+                <option value="/users/san_pham/danh_muc_san_pham/sap_xep/a_den_z/1">A -> Z</option>
+                <option value="/users/san_pham/danh_muc_san_pham/sap_xep/z_den_a/1">Z -> A</option>
+                <option value="/users/san_pham/danh_muc_san_pham/sap_xep/theo_gia_tien_tang_dan/1">Theo Giá Tiền Tăng Dần
+                </option>
+                <option value="/users/san_pham/danh_muc_san_pham/sap_xep/theo_gia_tien_giam_dan/1">Theo Giá Tiền Giảm Dần
+                </option>
+              </select>
+            </div>
+            <div class="sorting mr-auto">
+              <select>
+                <option value="1">Hiển Thị 12</option>
+                <option value="1">Hiển Thị 11</option>
+                <option value="1">Hiển Thị 111</option>
+              </select>
+            </div>
+            <div>
+              <div class="input-group filter-bar-search">
+                <input type="text" placeholder="Search">
+                <div class="input-group-append">
+                  <button type="button"><i class="ti-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Filter Bar -->
+          <!-- Start Best Seller -->
+          <section class="lattest-product-area pb-40 category-list">
+            <div class="row">
+              <div class="row">
+                <!--===========Data từ dữ liệu==========-->
+                {{#each data}}
+
+                <div class="col-md-6 col-lg-4">
+                  <div class="card text-center card-product">
+                    <div class="card-product__img">
+                      <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
+                      <ul class="card-product__imgOverlay">
+                        <li><button><i class="ti-search"></i></button></li>
+                        <li><button><i class="ti-shopping-cart"></i></button></li>
+                        <li><button><i class="ti-heart"></i></button></li>
+                      </ul>
+                    </div>
+                    <div class="card-body">
+                      <p>{{loaiSanPham}}</p>
+                      <h4 class="card-product__title"><a href="/chi_tiet_sp/{{_id}}">{{tenSanPham}}</a></h4>
+                      <p class="card-product__price">VND {{giaSanPham}}</p>
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+                {{!-- {{#each data}}
+       
+          <div class="col-md-6 col-lg-4">
+            <div class="card text-center card-product">
+              <div class="card-product__img">
+                <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
+                <ul class="card-product__imgOverlay">
+                  <li><button><i class="ti-search"></i></button></li>
+                  <li><button><i class="ti-shopping-cart"></i></button></li>
+                  <li><button><i class="ti-heart"></i></button></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <p>{{loaiSanPham}}</p>
+                <h4 class="card-product__title"><a href="/chi_tiet_sp/{{_id}}">{{tenSanPham}}</a></h4>
+                <p class="card-product__price">VND {{giaSanPham}}</p>
+              </div>
+            </div>
+          </div>
+      {{/each}} --}}
+                <!--=====   ====-->
+              </div>
+          </section>
+          <!-- End Best Seller -->
+
+          <div class="container">
+            <ul class="pagination" id="pagination">
+              {{!-- <li class="page-item"><a class="page-link" onclick="prevPagination();">prev</a></li>
+              <li class="active page-item"><a class="page-link" id="link1">1</a></li>
+              <li class="page-item"><a class="page-link" onclick="goToPage2()" id="link2">2</a></li>
+              <li class="page-item"><a class="page-link" onclick="goToPage3()" id="link3">3</a></li>
+              <li class="page-item"><a class="page-link" onclick="nextPagination(); ">next</a></li> --}}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ================ category section end ================= -->
+
+  {{>user/san_pham/top_san_pham}}
+
+  <!-- ================ Subscribe section start ================= -->
+  <section class="subscribe-position">
+    <div class="container">
+      <div class="subscribe text-center">
+        <h3 class="subscribe__title">Get Update From Anywhere</h3>
+        <p>Bearing Void gathering light light his eavening unto dont afraid</p>
+        <div id="mc_embed_signup">
+          <form target="_blank"
+            action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+            method="get" class="subscribe-form form-inline mt-5 pt-1">
+            <div class="form-group ml-sm-auto">
+              <input class="form-control mb-1" type="email" name="EMAIL" placeholder="Enter your email"
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '">
+              <div class="info"></div>
+            </div>
+            <button class="button button-subscribe mr-auto mb-1" type="submit">Subscribe Now</button>
+            <div style="position: absolute; left: -5000px;">
+              <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- ================ Subscribe section end ================= -->
+
+
+  {{> elements/footers}}
+
+
+  {{> elements/body_script}}
+
+</body>
+
+</html>

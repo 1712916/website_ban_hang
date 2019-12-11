@@ -1,0 +1,35 @@
+<!-- ================ trending product section start ================= -->
+    <section class="section-margin calc-60px">
+      <div class="container">
+        <div class="section-intro pb-60px">
+          <p>Các sản phẩm được ưa chuộng</p>
+          <h2>Xu Hướng <span class="section-intro__style">Sảm Phẩm </span></h2>
+        </div>
+        <div class="row">
+     <!--===========Data từ dữ liệu==========-->
+      {{#each data}}
+       
+          <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="card text-center card-product">
+              <div class="card-product__img">
+                <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
+                <ul class="card-product__imgOverlay">
+                  <li><button><i class="ti-search"></i></button></li>
+                  <li><button><i class="ti-shopping-cart"></i></button></li>
+                  <li><button><i class="ti-heart"></i></button></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <p>{{loaiSanPham}}</p>
+                <h4 class="card-product__title"><a href="/chi_tiet_sp/{{_id}}">{{tenSanPham}}</a></h4>
+                <p class="card-product__price">VND {{giaSanPham}}</p>
+              </div>
+            </div>
+          </div>
+      {{/each}}
+  <!--=====   ====-->
+
+      </div>
+      </div>
+    </section>
+    <!-- ================ trending product section end ================= -->
