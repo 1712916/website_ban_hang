@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    {{{body}}}
-  </body>
+
+
+<head>
+   {{> elements/head_tag}}
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+      {{> elements/header}}
+
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            {{> elements/headers/header_desktop}}
+           
+            <!-- MAIN CONTENT-->
+             {{{body}}}
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+         {{>elements/footers}}
+    </div>
+
+    {{> elements/body_script}}
+
+</body>
+
 </html>
+<!-- end document-->

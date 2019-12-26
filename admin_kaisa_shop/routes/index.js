@@ -14,15 +14,15 @@ router.get('/ds_don_hang', function(req, res, next) {
 });
 
 router.get('/dang_nhap', function(req, res, next) {
-  res.render('./tai_khoan/dang_nhap', { title: 'Express' });
+  res.render('./tai_khoan/dang_nhap', { title: 'Đăng nhập',layout: false });
 });
 
 router.get('/dang_ky', function(req, res, next) {
-  res.render('./tai_khoan/dang_ky', { title: 'Express' });
+  res.render('./tai_khoan/dang_ky', { title: 'Đăng ký',layout: false });
 });
 
 router.get('/quen_mat_khau', function(req, res, next) {
-  res.render('./tai_khoan/quen_mat_khau', { title: 'Express' });
+  res.render('./tai_khoan/quen_mat_khau', { title: 'Quên mật khẩu',layout: false });
 });
 
 
