@@ -35,7 +35,7 @@
 
 </head>
 
-<body class="animsition">
+<body class="">
     <div class="page-wrapper">
         <div class="page-content">
             <div class="container">
@@ -48,22 +48,33 @@
                         </div>
                         <div class="login-form">
                             <form action="/dang_ky" method="POST">
-                               <div class="form-group">
-                                    <label>Họ Tên</label>
-                                    <input class="au-input au-input--full" type="text" name="name" placeholder="Họ Tên">
-                                </div>
-                                <div class="form-group">
-                                    <label>Tài khoản</label>
-                                    <input class="au-input au-input--full" type="text" name="username" placeholder="Tài khoản">
-                                </div>
+                               
                                 <div class="form-group">
                                     <label>Địa chỉ email</label>
-                                    <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                                    <input class="au-input au-input--full" type="email" id="email" name="email" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label>Họ Tên</label>
+                                    <input class="au-input au-input--full" type="text" id="name" name="name" placeholder="Họ tên">
+                                </div>
+                                <div class="form-group">
+                                    <label>Điện thoại</label>
+                                    <input class="au-input au-input--full" type="text" id="phone" name="phone" placeholder="Số điện thoại">
                                 </div>
                                 <div class="form-group">
                                     <label>Mật khẩu</label>
-                                    <input class="au-input au-input--full" type="password" name="password" placeholder="Mật khẩu">
+                                    <input class="au-input au-input--full" type="password" id="password" name="password" placeholder="Mật khẩu">
                                 </div>
+                                <div class="form-group">
+                                    <label>Xác nhận mật khẩu</label>
+                                    <input class="au-input au-input--full" type="password" id="confirmPassword"  name="confirmPassword" placeholder="Nhập lại mật khẩu">
+                                </div>
+                                 {{#messageHelper message}}
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <strong>{{message}}</strong>
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                </div>
+                                {{/messageHelper}}
                                 
                                 <div class="login-checkbox">
                                     <label>
@@ -81,7 +92,7 @@
                             <div class="register-link">
                                 <p>
                                     Bạn đã có tài khoản?
-                                    <a href="#">Đăng nhập</a>
+                                    <a href="/dang_nhap">Đăng nhập</a>
                                 </p>
                             </div>
                         </div>

@@ -9,35 +9,61 @@ Passport.serializeUser(function(admin,done){
 });
 
 Passport.deserializeUser(function(id,done){
-    modelUser.findById(id,function(err,admin){
-        done(err,admin._id);
+    modelAdmin.findById(id,function(err,admin){
+        done(err,admin);
     });
 });
+
 
 
 Passport.use('local.signup',new LocalStrategy({
         usernameField:'email',
         passwordField:'password',
         passReqToCallback:true
-},function(req,email,passport,done){
-        modelUser.findOne({ 'email':email},function(err,admin){
+        
+},function(req,email,password,done){
+           
+  //  var email=req.body.email;
+    var name=req.body.name;
+    var phone=req.body.phone;
+    //var password=req.body.password
+    var confirmPassword=req.body.confirmPassword;
+    console.log('name:' +name);
+    console.log('name:' +phone);
+    console.log('name:' +confirmPassword);
+
+    if(name==''||phone==''||email==''||password==''||confirmPassword==''){
+        req.flash('message','Điền đầy đủ thông tin');
+        return done(null,false);
+    }
+    if(password!=confirmPassword){
+        req.flash('message','Nhập password giống nhau hai lần');
+        return done(null,false);
+    }
+
+       
+        modelAdmin.findOne({ 'email':email},function(err,admin){
             if(err){
                 return done(err);
             }
             if(admin){
+                req.flash('message','Email không hợp lệ!');
                return done(null,false);
             }
             const newAdmin=new modelAdmin();
             newAdmin.email=email;
-            newAdmin.password=newAdmin.encryptPassword(passport);
-            newAdmin.name=document.getElementById("name").value;
-            newAdmin.dateOfBirth=document.getElementById("birthday").value;
-           // document.getElementById("uniqueID").value;
+            newAdmin.password=newAdmin.encryptPassword(password);
+            newAdmin.name=name;
+            newAdmin.phone=phone;
+            newAdmin.permission="0";
+    
+     
             newAdmin.save(function(err,res){
                 if(err){
                     return done(err);
                 }
-                return done(null,newAdmin);
+                const newAdmin2=new modelAdmin();
+                return done(null,newAdmin2);
             });
         });
 }));
@@ -48,17 +74,20 @@ Passport.use('local.signin',new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function(req,email,password,done){
-    modelUser.findOne({'email':email},function(err,admin){
+    modelAdmin.findOne({'email':email},function(err,admin){
         if(err){
             return done(err);
         }
+       
         if(!admin){
             //ko co user
-           return done(null,false);
+            req.flash('email',email);
+           return done(null,false,req.flash('message', 'Sai mật khẩu hoặc tài khoản.'));
         }
         if(!admin.validPassword(password)){
               //mat khau khong dung
-           return done(null,false);
+              req.flash('email',email);
+           return done(null,false,req.flash('message','Sai mật khẩu hoặc tài khoản.'));
         }
         return done(null,admin);
     });
@@ -76,14 +105,17 @@ function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
       return next();
     }
-    res.redirect('/');
+
   }
   function notLoggedIn(req,res,next){
     if(!req.isAuthenticated()){
       return next();
     }
-    res.redirect('/');
+   
   }
 
+
+
+  
   module.exports.isLoggedIn = isLoggedIn;
   module.exports.notLoggedIn = notLoggedIn;
