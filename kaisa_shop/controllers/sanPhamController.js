@@ -16,21 +16,22 @@ exports.danhMucSanPham = function (req, res, next) {
   //   }
   // });
   modelSanPham.find({}).skip(req.params.current_page * itemPerPage - itemPerPage)
-                      .limit(itemPerPage)
-                      .exec(function(err, products) {
-                          modelSanPham.count().exec(function(err, count) {
-                              if (err) {
-                                return next(err);
-                              }
-                              res.render('./user/san_pham/danh_muc_san_pham', {
-                                title: 'Kaisa Shop',
-                                data: products,
-                                current: req.params.current_page,
-                                pages: Math.ceil(count / itemPerPage)
-                              });
-                          });
+    .limit(itemPerPage)
+    .exec(function (err, products) {
+      modelSanPham.count().exec(function (err, count) {
+        if (err) {
+          return next(err);
+        }
+        res.render('./user/san_pham/danh_muc_san_pham', {
+          title: 'Kaisa Shop',
+          data: products,
+          current: req.params.current_page,
+          pages: Math.ceil(count / itemPerPage),
+          baseUrl: '/users/san_pham/danh_muc_san_pham'
+        });
+      });
 
-  });
+    });
 }
 
 exports.cachPhanLoai = function (req, res, next) {
@@ -45,13 +46,12 @@ exports.cachPhanLoai = function (req, res, next) {
       keyPhanLoai = "Mỹ Phẩm"
     }
     else if (phanLoai == 'do_choi') {
-      keyPhanLoai = "Đồ Chơi"
+      keyPhanLoai = "Đồ chơi"
     }
     else if (phanLoai == 'trang_tri') {
       keyPhanLoai = "Trang Trí"
     }
     else {
-      
       modelSanPham.find({}, function (err, product) {
         if (err) {
           console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
@@ -62,15 +62,28 @@ exports.cachPhanLoai = function (req, res, next) {
         }
       }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
     }
-    modelSanPham.find({ "loaiSanPham": keyPhanLoai }, function (err, product) {
-      if (err) {
-        console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
-      } else {
-        console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
-        console.log(product);
-        res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: product });
-      }
-    }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
+
+    modelSanPham.find({ "loaiSanPham": keyPhanLoai })
+      .skip(req.params.current_page * itemPerPage - itemPerPage)
+      .limit(itemPerPage)
+      .exec(function (err, product) {
+        modelSanPham.find({ "loaiSanPham": keyPhanLoai })
+          .count().exec(function (err, count) {
+            if (err) {
+              console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
+            } else {
+              console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
+              console.log(product);
+              res.render('./user/san_pham/danh_muc_san_pham', {
+                title: 'KaiSa Shop',
+                data: product,
+                current: req.params.current_page,
+                pages: Math.ceil(count / itemPerPage),
+                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + phanLoai
+              });
+            }
+          });
+      });
   }
   else if (cachPhanLoai == 'thuong_hieu') {
     if (phanLoai == 'apple') {
@@ -99,16 +112,28 @@ exports.cachPhanLoai = function (req, res, next) {
         }
       }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
     }
-    modelSanPham.find({ "nhaSanXuat": keyPhanLoai }, function (err, product) {
-      if (err) {
-        console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
-      } else {
-        console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
-        console.log(product);
-        res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: product });
-        return;
-      }
-    }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
+    modelSanPham.find({ "nhaSanXuat": keyPhanLoai })
+      .skip(req.params.current_page * itemPerPage - itemPerPage)
+      .limit(itemPerPage)
+      .exec(function (err, product) {
+        modelSanPham.find({ "nhaSanXuat": keyPhanLoai })
+          .count().exec(function (err, count) {
+            if (err) {
+              console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
+            } else {
+              console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
+              console.log(product);
+              res.render('./user/san_pham/danh_muc_san_pham', {
+                title: 'KaiSa Shop',
+                data: product,
+                current: req.params.current_page,
+                pages: Math.ceil(count / itemPerPage),
+                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + phanLoai
+              });
+              return;
+            }
+          });
+      });
   }
   else if (cachPhanLoai == 'mau_sac') {
     if (phanLoai == 'black') {
@@ -137,16 +162,28 @@ exports.cachPhanLoai = function (req, res, next) {
         }
       }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
     }
-    modelSanPham.find({ "mauSac": keyPhanLoai }, function (err, product) {
-      if (err) {
-        console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
-      } else {
-        console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
-        console.log(product);
-        res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: product });
-        return;
-      }
-    }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
+    modelSanPham.find({ "mauSac": keyPhanLoai })
+      .skip(req.params.current_page * itemPerPage - itemPerPage)
+      .limit(itemPerPage)
+      .exec(function (err, product) {
+        modelSanPham.find({ "mauSac": keyPhanLoai })
+          .count().exec(function (err, count) {
+            if (err) {
+              console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
+            } else {
+              console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
+              console.log(product);
+              res.render('./user/san_pham/danh_muc_san_pham', {
+                title: 'KaiSa Shop',
+                data: product,
+                current: req.params.current_page,
+                pages: Math.ceil(count / itemPerPage),
+                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + phanLoai
+              });
+              return;
+            }
+          });
+      });
   }
   else if (cachPhanLoai == 'gia') {
     let min, max;
@@ -154,16 +191,28 @@ exports.cachPhanLoai = function (req, res, next) {
     let match = regex.exec(phanLoai);
     min = match[1];
     max = match[2];
-    modelSanPham.find({ "giaSanPham": { $gt: min, $lt: max } }, function (err, product) {
-      if (err) {
-        console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
-      } else {
-        console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
-        console.log(product);
-        res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: product });
-        return;
-      }
-    }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
+    modelSanPham.find({ "giaSanPham": { $gt: min, $lt: max } })
+      .skip(req.params.current_page * itemPerPage - itemPerPage)
+      .limit(itemPerPage)
+      .exec(function (err, product) {
+        modelSanPham.find({ "giaSanPham": { $gt: min, $lt: max } })
+          .count().exec(function (err, count) {
+            if (err) {
+              console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
+            } else {
+              console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
+              console.log(product);
+              res.render('./user/san_pham/danh_muc_san_pham', {
+                title: 'KaiSa Shop',
+                data: product,
+                current: req.params.current_page,
+                pages: Math.ceil(count / itemPerPage),
+                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + min + '-' + max
+              });
+              return;
+            }
+          });
+      });
   }
   else {
     next();
@@ -174,53 +223,103 @@ exports.sapXep = function (req, res, next) {
   var cachSapXep = req.params.cach_sap_xep;
   console.log('sap xep z den a');
   if (cachSapXep == 'a_den_z') {
-    modelSanPham.find({}, function (err, product) {
-      if (err) {
-        console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
-      } else {
-        console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
-        console.log(product);
-        res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: product });
-        return;
-      }
-    }).sort({ "tenSanPham": 1 }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
+    modelSanPham.find({})
+      .sort({ "tenSanPham": 1 })
+      .skip(req.params.current_page * itemPerPage - itemPerPage)
+      .limit(itemPerPage)
+      .exec(function (err, product) {
+        modelSanPham.count().exec(function (err, count) {
+          if (err) {
+            console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
+          } else {
+            console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
+            console.log(product);
+            res.render('./user/san_pham/danh_muc_san_pham', {
+              title: 'KaiSa Shop',
+              data: product,
+              current: req.params.current_page,
+              pages: Math.ceil(count / itemPerPage),
+              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep
+            });
+            return;
+          }
+        });
+      });
   }
 
   else if (cachSapXep == 'z_den_a') {
-    modelSanPham.find({}, function (err, product) {
-      if (err) {
-        console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
-      } else {
-        console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
-        console.log(product);
-        res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: product });
-        return;
-      }
-    }).sort({ "tenSanPham": -1 }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
+    modelSanPham.find({})
+      .sort({ "tenSanPham": -1 })
+      .skip(req.params.current_page * itemPerPage - itemPerPage)
+      .limit(itemPerPage)
+      .exec(function (err, product) {
+        modelSanPham.count().exec(function (err, count) {
+          if (err) {
+            console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
+          } else {
+            console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
+            console.log(product);
+            res.render('./user/san_pham/danh_muc_san_pham', {
+              title: 'KaiSa Shop',
+              data: product,
+              current: req.params.current_page,
+              pages: Math.ceil(count / itemPerPage),
+              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep
+            });
+            return;
+          }
+        });
+      });
   }
+
   else if (cachSapXep == 'theo_gia_tien_tang_dan') {
-    modelSanPham.find({}, function (err, product) {
-      if (err) {
-        console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
-      } else {
-        console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
-        console.log(product);
-        res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: product });
-        return;
-      }
-    }).sort({ "giaSanPham": 1 }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
+    modelSanPham.find({})
+      .sort({ "giaSanPham": 1 })
+      .skip(req.params.current_page * itemPerPage - itemPerPage)
+      .limit(itemPerPage)
+      .exec(function (err, product) {
+        modelSanPham.count().exec(function (err, count) {
+          if (err) {
+            console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
+          } else {
+            console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
+            console.log(product);
+            res.render('./user/san_pham/danh_muc_san_pham', {
+              title: 'KaiSa Shop',
+              data: product,
+              current: req.params.current_page,
+              pages: Math.ceil(count / itemPerPage),
+              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep
+            });
+            return;
+          }
+        });
+      });
   }
+
   else if (cachSapXep == 'theo_gia_tien_giam_dan') {
-    modelSanPham.find({}, function (err, product) {
-      if (err) {
-        console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
-      } else {
-        console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
-        console.log(product);
-        res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: product });
-        return;
-      }
-    }).sort({ "giaSanPham": -1 }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
+    modelSanPham.find({})
+      .sort({ "giaSanPham": -1 })
+      .skip(req.params.current_page * itemPerPage - itemPerPage)
+      .limit(itemPerPage)
+      .exec(function (err, product) {
+        modelSanPham.count().exec(function (err, count) {
+          if (err) {
+            console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
+          } else {
+            console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
+            console.log(product);
+            res.render('./user/san_pham/danh_muc_san_pham', {
+              title: 'KaiSa Shop',
+              data: product,
+              current: req.params.current_page,
+              pages: Math.ceil(count / itemPerPage),
+              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep
+            });
+            return;
+          }
+        });
+      });
   }
 
 }

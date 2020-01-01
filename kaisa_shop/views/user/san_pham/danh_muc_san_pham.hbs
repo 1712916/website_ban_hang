@@ -234,12 +234,13 @@
 
 
               {{!-- {{pages}} --}}
-              {{#ifCond current '==' 1}}
-              <li class="page-item disabled"><a class="page-link">prev</a></li>
-              {{else}}
-              <li class="page-item"><a class="page-link"
-                  href={{concat '/users/san_pham/danh_muc_san_pham/' (math current '-' 1)}}>prev</a></li>
-              {{/ifCond}}
+              {{#ifCond pages '>' 0}}
+                {{#ifCond current '==' 1}}
+                <li class="page-item disabled"><a class="page-link">prev</a></li>
+                {{else}}
+                <li class="page-item"><a class="page-link"
+                    href={{concat baseUrl '/' (math current '-' 1)}}>prev</a></li>
+                {{/ifCond}}
 
               {{!-- {{#ifCond (math pages '-' current) '>' 1}}
                 <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' current}}> {{current}}</a></li>
@@ -252,41 +253,42 @@
                 <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
                 {{/repeat}}
               {{/ifCond}} --}}
-
-              {{#ifCond current '<=' (math (math (math pages '-' 1) '/' 5) '*' 5)}}
-                {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
-                  {{#ifCond current '==' @index}}
-                    <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
-                  {{else}}
-                    <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
-                  {{/ifCond}}
-                {{/repeat}}
-
-              {{else}}
-                {{#ifCond (math pages '%' 5) '==' 0}}
+              
+                {{#ifCond current '<=' (math (math (math pages '-' 1) '/' 5) '*' 5)}}
                   {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
                     {{#ifCond current '==' @index}}
-                      <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                      <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
                     {{else}}
-                      <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                      <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
                     {{/ifCond}}
                   {{/repeat}}
 
                 {{else}}
-                  {{#repeat count=(math pages '%' 5) start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
-                    {{#ifCond current '==' @index}} 
-                      <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
-                    {{else}}
-                      <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
-                    {{/ifCond}}
-                  {{/repeat}}
-                {{/ifCond}}
-              {{/ifCond}}
+                  {{#ifCond (math pages '%' 5) '==' 0}}
+                    {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+                      {{#ifCond current '==' @index}}
+                        <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+                      {{else}}
+                        <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+                      {{/ifCond}}
+                    {{/repeat}}
 
-              {{#ifCond current '==' pages}}
-                <li class="page-item disabled"><a class="page-link">next</a></li>
-              {{else}}
-                <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' (math current '+' 1)}}>next</a></li>
+                  {{else}}
+                    {{#repeat count=(math pages '%' 5) start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+                      {{#ifCond current '==' @index}} 
+                        <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+                      {{else}}
+                        <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+                      {{/ifCond}}
+                    {{/repeat}}
+                  {{/ifCond}}
+                {{/ifCond}}
+
+                {{#ifCond current '==' pages}}
+                  <li class="page-item disabled"><a class="page-link">next</a></li>
+                {{else}}
+                  <li class="page-item"><a class="page-link" href={{concat baseUrl '/' (math current '+' 1)}}>next</a></li>
+                {{/ifCond}}
               {{/ifCond}}
             </ul>
           </div>
