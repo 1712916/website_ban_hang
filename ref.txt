@@ -1,0 +1,5 @@
+Lỗi: You've added another git repository inside your current repository
+rm -rf <tên_thư_mục> (câu lệnh nguy hiểm, sẽ làm mất <tên_thư_mục> trong máy lẫn trong github nên cần lưu trước vào đâu đó
+git add <tên_thư_mục>
+git commit -am 'abcdef'
+git push

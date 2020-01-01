@@ -48,6 +48,79 @@ hbs.registerPartials(__dirname + '/views');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+
+const handlebars = require('hbs');
+
+// handlebars.registerHelper('times', function(n, block) {
+//   var accum = '';
+//   for(var i = 0; i < n; ++i)
+//       accum += block.fn(i);
+//   return accum;
+// });
+
+// 2. register the helper, name it whatever you want
+handlebars.registerHelper('repeat', require('handlebars-helper-repeat'));
+
+// 3. register some partials
+handlebars.registerPartial('button', '<button>{{text}}</button>');
+
+// 4. use in templates
+const fn = handlebars.compile('{{#repeat 2}}{{> button }}{{/repeat}}');
+
+// handlebars.registerHelper('concat', function() {
+//   arguments = [...arguments].slice(0, -1);
+//   return arguments.join('');
+// });
+handlebars.registerHelper('concat', function() {
+  var outStr = '';
+  for(var arg in arguments){
+      if(typeof arguments[arg]!='object'){
+          outStr += arguments[arg];
+      }
+  }
+  return outStr;
+});
+
+handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+  switch (operator) {
+      case '==':
+          return (v1 == v2) ? options.fn(this) : options.inverse(this);
+      case '===':
+          return (v1 === v2) ? options.fn(this) : options.inverse(this);
+      case '!=':
+          return (v1 != v2) ? options.fn(this) : options.inverse(this);
+      case '!==':
+          return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+      case '<':
+          return (v1 < v2) ? options.fn(this) : options.inverse(this);
+      case '<=':
+          return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+      case '>':
+          return (v1 > v2) ? options.fn(this) : options.inverse(this);
+      case '>=':
+          return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+      case '&&':
+          return (v1 && v2) ? options.fn(this) : options.inverse(this);
+      case '||':
+          return (v1 || v2) ? options.fn(this) : options.inverse(this);
+      default:
+          return options.inverse(this);
+  }
+});
+
+handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
+  lvalue = parseInt(lvalue);
+  rvalue = parseInt(rvalue);
+      
+  return {
+      '+': lvalue + rvalue,
+      '-': lvalue - rvalue,
+      '*': lvalue * rvalue,
+      '/': lvalue / rvalue,
+      '%': lvalue % rvalue
+  }[operator];
+});
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -6,14 +6,29 @@ exports.danhMucSanPham = function (req, res, next) {
   if (isNaN(parseInt(req.params.current_page))) {
     next();
   }
-  modelSanPham.find({}, {}, { skip: req.params.current_page * itemPerPage - itemPerPage, limit: itemPerPage }).exec((err, docs) => {
-    if (err) {
-      res.render('layout', {});
-    }
-    else {
-      console.log(docs);
-      res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: docs });
-    }
+  // modelSanPham.find({}, {}, { skip: req.params.current_page * itemPerPage - itemPerPage, limit: itemPerPage }).exec((err, docs) => {
+  //   if (err) {
+  //     res.render('layout', {});
+  //   }
+  //   else {
+  //     console.log(docs);
+  //     res.render('./user/san_pham/danh_muc_san_pham', { title: 'KaiSa Shop', data: docs });
+  //   }
+  // });
+  modelSanPham.find({}).skip(req.params.current_page * itemPerPage - itemPerPage)
+                      .limit(itemPerPage)
+                      .exec(function(err, products) {
+                          modelSanPham.count().exec(function(err, count) {
+                              if (err) {
+                                return next(err);
+                              }
+                              res.render('./user/san_pham/danh_muc_san_pham', {
+                                title: 'Kaisa Shop',
+                                data: products,
+                                current: req.params.current_page,
+                                pages: Math.ceil(count / itemPerPage)
+                              });
+                          });
 
   });
 }

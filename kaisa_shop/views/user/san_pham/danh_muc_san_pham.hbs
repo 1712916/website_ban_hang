@@ -7,8 +7,7 @@
 
 </head>
 
-<body onload="updatePagination()">
-
+<body>
   {{> elements/header}}
 
   <!-- ================ start banner area ================= -->
@@ -46,7 +45,8 @@
                         for="men"><a href="/users/san_pham/danh_muc_san_pham/phan_loai/my_pham/1">Mỹ Phẩm</a><span>
                           (3600)</span></label></li>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="women" name="brand"><label
-                        for="women"><a href="/users/san_pham/danh_muc_san_pham/phan_loai/trang_tri/1">Trang Trí</a><span>
+                        for="women"><a href="/users/san_pham/danh_muc_san_pham/phan_loai/trang_tri/1">Trang
+                          Trí</a><span>
                           (3600)</span></label></li>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="accessories" name="brand"><label
                         for="accessories"><a href="/users/san_pham/danh_muc_san_pham/phan_loai/phu_kien/1">Phụ
@@ -72,7 +72,8 @@
                   </li>
                   <li class="filter-list"><input class="pixel-radio" type="radio" id="asus" name="brand"><label
                       for="asus"><a
-                        href="/users/san_pham/danh_muc_san_pham/thuong_hieu/asus/1">Asus</a><span>(29)</span></label></li>
+                        href="/users/san_pham/danh_muc_san_pham/thuong_hieu/asus/1">Asus</a><span>(29)</span></label>
+                  </li>
                   <li class="filter-list"><input class="pixel-radio" type="radio" id="gionee" name="brand"><label
                       for="gionee"><a
                         href="/users/san_pham/danh_muc_san_pham/thuong_hieu/gionee/1">Gionee</a><span>(19)</span></label>
@@ -146,9 +147,11 @@
               <select onchange="if (this.value) window.location.href=this.value">
                 <option value="/users/san_pham/danh_muc_san_pham/sap_xep/a_den_z/1">A -> Z</option>
                 <option value="/users/san_pham/danh_muc_san_pham/sap_xep/z_den_a/1">Z -> A</option>
-                <option value="/users/san_pham/danh_muc_san_pham/sap_xep/theo_gia_tien_tang_dan/1">Theo Giá Tiền Tăng Dần
+                <option value="/users/san_pham/danh_muc_san_pham/sap_xep/theo_gia_tien_tang_dan/1">Theo Giá Tiền Tăng
+                  Dần
                 </option>
-                <option value="/users/san_pham/danh_muc_san_pham/sap_xep/theo_gia_tien_giam_dan/1">Theo Giá Tiền Giảm Dần
+                <option value="/users/san_pham/danh_muc_san_pham/sap_xep/theo_gia_tien_giam_dan/1">Theo Giá Tiền Giảm
+                  Dần
                 </option>
               </select>
             </div>
@@ -221,11 +224,70 @@
 
           <div class="container">
             <ul class="pagination" id="pagination">
-              {{!-- <li class="page-item"><a class="page-link" onclick="prevPagination();">prev</a></li>
-              <li class="active page-item"><a class="page-link" id="link1">1</a></li>
-              <li class="page-item"><a class="page-link" onclick="goToPage2()" id="link2">2</a></li>
-              <li class="page-item"><a class="page-link" onclick="goToPage3()" id="link3">3</a></li>
-              <li class="page-item"><a class="page-link" onclick="nextPagination(); ">next</a></li> --}}
+              {{!-- {{#times 10}}
+              <span>{{this}}</span>
+              {{/times}} --}}
+
+              {{!-- {{#repeat count=2 start=17}}
+              <span>{{@index}}</span>
+              {{/repeat}} --}}
+
+
+              {{!-- {{pages}} --}}
+              {{#ifCond current '==' 1}}
+              <li class="page-item disabled"><a class="page-link">prev</a></li>
+              {{else}}
+              <li class="page-item"><a class="page-link"
+                  href={{concat '/users/san_pham/danh_muc_san_pham/' (math current '-' 1)}}>prev</a></li>
+              {{/ifCond}}
+
+              {{!-- {{#ifCond (math pages '-' current) '>' 1}}
+                <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' current}}> {{current}}</a></li>
+                {{#repeat count=2 start=(math current '+' 1)}}
+                <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                {{/repeat}}
+              {{else}}
+                <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' current}}>{{current}}</a></li>
+                {{#repeat count=(math pages '-' current) start=(math current '+' 1)}}
+                <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                {{/repeat}}
+              {{/ifCond}} --}}
+
+              {{#ifCond current '<=' (math (math (math pages '-' 1) '/' 5) '*' 5)}}
+                {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+                  {{#ifCond current '==' @index}}
+                    <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                  {{else}}
+                    <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                  {{/ifCond}}
+                {{/repeat}}
+
+              {{else}}
+                {{#ifCond (math pages '%' 5) '==' 0}}
+                  {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+                    {{#ifCond current '==' @index}}
+                      <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                    {{else}}
+                      <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                    {{/ifCond}}
+                  {{/repeat}}
+
+                {{else}}
+                  {{#repeat count=(math pages '%' 5) start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+                    {{#ifCond current '==' @index}} 
+                      <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                    {{else}}
+                      <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
+                    {{/ifCond}}
+                  {{/repeat}}
+                {{/ifCond}}
+              {{/ifCond}}
+
+              {{#ifCond current '==' pages}}
+                <li class="page-item disabled"><a class="page-link">next</a></li>
+              {{else}}
+                <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' (math current '+' 1)}}>next</a></li>
+              {{/ifCond}}
             </ul>
           </div>
 
