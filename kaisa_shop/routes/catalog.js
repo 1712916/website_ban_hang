@@ -10,6 +10,7 @@ router.get('/users/san_pham/danh_muc_san_pham/:current_page', sanPham_controller
 router.get('/users/san_pham/danh_muc_san_pham/:cach_phan_loai/:phan_loai/:current_page', sanPham_controller.cachPhanLoai);
 router.get('/users/san_pham/danh_muc_san_pham/sap_xep/:cach_sap_xep/:current_page', sanPham_controller.sapXep);
 router.get('/users/san_pham/danh_muc_san_pham/san_pham_1', sanPham_controller.sanPham1);
-router.get('/chi_tiet_sp/:id', sanPham_controller.chiTietSanPham);
+router.get('/chi_tiet_sp/:id/:current_page', sanPham_controller.chiTietSanPham);
+router.post('/chi_tiet_sp/:id/:current_page', sanPham_controller.updateChiTietSanPham);
 
 module.exports = router;

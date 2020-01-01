@@ -126,3 +126,19 @@ function dangnhap() {
 
   window.alert("aaaaaaaaaaaaa");
 }
+
+function getCurrentPage(currentURL) {
+  var currentPage = currentURL.substring(currentURL.lastIndexOf("/") + 1);
+  return currentPage;
+}
+
+function updateLuotXem() {
+  var currentURL = window.location.href;
+  var soLuotXem = parseInt(localStorage.getItem("soLuotXem" + getCurrentPage(currentURL)));
+  if (soLuotXem)
+    soLuotXem = soLuotXem + 1;
+  else
+    soLuotXem = 1;
+  document.getElementById("soLuotXem").textContent = soLuotXem.toString();
+  localStorage.setItem("soLuotXem" + getCurrentPage(currentURL), soLuotXem.toString());
+}

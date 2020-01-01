@@ -1,4 +1,5 @@
 const modelSanPham = require('../models/sanPham');
+const modelComment = require('../models/comment');
 var itemPerPage = 3;
 
 exports.danhMucSanPham = function (req, res, next) {
@@ -324,6 +325,7 @@ exports.sapXep = function (req, res, next) {
 
 }
 
+var commentPerPage = 3;
 exports.sanPham1 = function (req, res, next) {
   //res.send('user/san_pham');
   res.render('./user/san_pham/danh_muc_san_pham/chi_tiet_san_pham/san_pham_1', { title: 'Tên Sản Phẩm 1' });
@@ -338,7 +340,65 @@ exports.chiTietSanPham = function (req, res, next) {
     } else {
       console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
       console.log(product);
-      res.render('./user/san_pham/danh_muc_san_pham/chi_tiet_san_pham/san_pham_1', { title: 'KaiSa Shop', data: product });
+
+      modelComment.find({ "idSP": id })
+        .skip(req.params.current_page * commentPerPage - commentPerPage)
+        .limit(itemPerPage)
+        .exec(function (err, comment) {
+          modelComment.count().exec(function (err, count) {
+            res.render('./user/san_pham/danh_muc_san_pham/chi_tiet_san_pham/san_pham_1', {
+              title: 'KaiSa Shop',
+              data: product,
+              commentData: comment,
+              currentPage: req.params.current_page,
+              commentPages: Math.ceil(count / commentPerPage),
+              baseUrl: '/chi_tiet_sp/' + id,
+              currentUser: req.user
+            });
+          });
+        });
     }
   });
+}
+
+exports.updateChiTietSanPham = function (req, res, next) {
+  
+  modelComment.collection.insertOne({
+    idSP: req.params.id,
+    username: req.body.name,
+    commentDate: Date.now(),
+    message: req.body.message
+  });
+  var id = req.params.id;
+  modelSanPham.findById(id, function (err, product) {
+    if (err) {
+      console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
+    } else {
+      console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
+      modelComment.find({ "idSP": id })
+        .skip(req.params.current_page * commentPerPage - commentPerPage)
+        .limit(itemPerPage)
+        .exec(function (err, comment) {
+          modelComment.count().exec(function (err, count) {
+            res.render('./user/san_pham/danh_muc_san_pham/chi_tiet_san_pham/san_pham_1', {
+              title: 'KaiSa Shop',
+              data: product,
+              commentData: comment,
+              currentPage: req.params.current_page,
+              commentPages: Math.ceil(count / commentPerPage),
+              baseUrl: '/chi_tiet_sp/' + id
+            });
+          });
+        });
+    }
+  });
+
+  // var myData = new Comment(req.body);
+  // myData.save()
+  //   .then(item => {
+  //     res.send("item saved to database");
+  //   })
+  //   .catch(err => {
+  //     res.status(400).send("unable to save to database");
+  //   });
 }
