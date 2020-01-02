@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Passport=require('passport');
+const Admin=require('../models/admin');
 
 
 
@@ -22,7 +23,7 @@ router.get('/',function(req,res,next){
     res.redirect('/dang_nhap');
   }
  
-  res.render('index',{title: 'kaisa Shop'});
+  res.render('index',{title: 'kaisa Shop', profile:req.user});
 });
 
 router.get('/dang_ky', function(req, res, next) {
@@ -97,8 +98,34 @@ router.get('/ds_thanh_vien/thanh_vien_1', function(req, res, next) {
   if(!req.isAuthenticated()){
     res.redirect('/dang_nhap');
   }
-  res.render('./thanh_vien/ds_thanh_vien/thanh_vien_1', { title: 'Express' });
+  res.render('./thanh_vien/ds_thanh_vien/thanh_vien_1', { title: 'KaisaAdmin',profile:req.user });
 });
+
+router.post('/update_profile',function(req,res,next){
+  
+
+  const update = { name: req.body.name,
+                  phone:req.body.phone,
+                  birthday: req.body.birthday,
+                  address:req.body.address,
+                  company: req.body.company };
+                  
+  
+  const id = req.user._id;
+
+    const admin=Admin.findByIdAndUpdate(id,update,function(err,res){
+        if(err){
+          res.send("Thay đổi không thành công!");
+          res.redirect('/');
+        }
+        console.log(res);
+    } )
+
+
+
+   res.redirect('/ds_thanh_vien/thanh_vien_1');
+})
+
 router.get('/top_san_pham', function(req, res, next) {
   if(!req.isAuthenticated()){
     res.redirect('/dang_nhap');
@@ -111,6 +138,8 @@ router.get('/tat_ca_san_pham', function(req, res, next) {
   }
   res.render('./san_pham/tat_ca_san_pham', { title: 'Express' });
 });
+
+
 
 
 
