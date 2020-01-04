@@ -8,6 +8,7 @@ var logger = require('morgan');
 var mongoose=require('mongoose'); 
 var passport = require('passport');
 var flash = require('connect-flash');
+var bodyParser=require('body-parser');
 var app = express();
 const url = process.env.URL_DATABASE;
 
@@ -19,6 +20,7 @@ var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" 
 const hbs = require('hbs');
 
 require('./config/passport'); //vượt qua passport để config trang đăng nhâp/đăng ký
+
 app.use(session({
   secret: 'adsa897adsa98bs',
   resave: false,
@@ -33,7 +35,7 @@ app.use(passport.session());
 
 //kết nối đến database
 // 
-mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true }).then(
+mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }).then(
   () => {
     console.log('Thông báo: Kết nối tới Database thành công (^_^)\n');
   },
