@@ -16,77 +16,23 @@
                 <table class="table table-borderless table-striped table-earning">
                     <thead>
                         <tr>
-                            <th>Mã sản phẩm</th>
-                            <th>Tên sản phẩm</th>
+                            <th>Mã</th>
+                            <th>Tên </th>
                             <th class="text-right">Giá</th>
                             <th>Ngày nhập</th>
                             <th>Ngày bán</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>100398</td>
-                            <td>iPhone X 64Gb Grey</td>
-                            <td class="text-right">$999.00</td>
-                            <td>15/12/1999</td>
-                            <td>15/01/2000</td>
-                        </tr>
-                        <tr>
-                            <td>100398</td>
-                            <td>iPhone X 64Gb Grey</td>
-                            <td class="text-right">$999.00</td>
-                            <td>15/12/1999</td>
-                            <td>15/01/2000</td>
-
-                        </tr>
-                        <tr>
-                            <td>100398</td>
-                            <td>iPhone X 64Gb Grey</td>
-                            <td class="text-right">$999.00</td>
-                            <td>15/12/1999</td>
-                            <td>15/01/2000</td>
-
-                        </tr>
-                        <tr>
-                            <td>100398</td>
-                            <td>iPhone X 64Gb Grey</td>
-                            <td class="text-right">$999.00</td>
-                            <td>15/12/1999</td>
-                            <td>15/01/2000</td>
-
-                        </tr>
-                        <tr>
-                            <td>100398</td>
-                            <td>iPhone X 64Gb Grey</td>
-                            <td class="text-right">$999.00</td>
-                            <td>15/12/1999</td>
-                            <td>15/01/2000</td>
-
-                        </tr>
-                        <tr>
-                            <td>100398</td>
-                            <td>iPhone X 64Gb Grey</td>
-                            <td class="text-right">$999.00</td>
-                            <td>15/12/1999</td>
-                            <td>15/01/2000</td>
-
-                        </tr>
-                        <tr>
-                            <td>100398</td>
-                            <td>iPhone X 64Gb Grey</td>
-                            <td class="text-right">$999.00</td>
-                            <td>15/12/1999</td>
-                            <td>15/01/2000</td>
-
-                        </tr>
-                        <tr>
-                            <td>100398</td>
-                            <td>iPhone X 64Gb Grey</td>
-                            <td class="text-right">$999.00</td>
-                            <td>15/12/1999</td>
-                            <td></td>
-
-                        </tr>
+                        {{#each listProduct}}
+                            <tr>
+                                <td>100398</td>
+                                <td>{{tenSanPham}}</td>
+                                <td class="text-right">{{giaSanPham}}</td>
+                            </tr>
+                        {{/each}}
+                        
+                        
                     </tbody>
                 </table>
             </div>

@@ -38,7 +38,7 @@
                         
 
                                 {{!-- <i class="fa fa-facebook pr-1" ></i> --}}
-                                <i class="fas fa-edit" data-toggle="modal" data-target="#addProduct" style="font-size:36px"></i>
+                                <i class="fas fa-edit" data-toggle="modal" data-target="#editProfile" style="font-size:36px"></i>
                     
                             </div>
                         </div>
@@ -53,7 +53,7 @@
     </div>
 </div>
        <!-- The Modal -->
-    <div class="modal fade" id="addProduct">
+    <div class="modal fade" id="editProfile">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
 
@@ -65,7 +65,7 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="/update_profile" method="POST">
+                    <form action="/update_profile/{{profile._id}}" method="POST">
                         <div class="form-group">
                             <label for="name">Họ tên</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{profile.name}}">
