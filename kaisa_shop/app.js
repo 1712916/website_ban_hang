@@ -5,10 +5,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var session = require('express-session')
 var logger = require('morgan');
-var mongoose=require('mongoose'); 
+var mongoose = require('mongoose');
 var passport = require('passport');
+//var passport = require('passport-facebook');
 var flash = require('connect-flash');
-var bodyParser=require('body-parser');
+var bodyParser = require('body-parser');
 var app = express();
 const url = process.env.URL_DATABASE;
 
@@ -16,6 +17,7 @@ const url = process.env.URL_DATABASE;
 var indexRouter = require('./routes/trang_chu');
 var usersRouter = require('./routes/users');
 var vinhRouter = require('./routes/vinh');
+var authRouter = require('./routes/auth');
 var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 const hbs = require('hbs');
 
@@ -27,7 +29,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     expires: 600000
-}
+  }
 }))
 app.use(flash());
 app.use(passport.initialize())
@@ -73,53 +75,53 @@ const fn = handlebars.compile('{{#repeat 2}}{{> button }}{{/repeat}}');
 //   arguments = [...arguments].slice(0, -1);
 //   return arguments.join('');
 // });
-handlebars.registerHelper('concat', function() {
+handlebars.registerHelper('concat', function () {
   var outStr = '';
-  for(var arg in arguments){
-      if(typeof arguments[arg]!='object'){
-          outStr += arguments[arg];
-      }
+  for (var arg in arguments) {
+    if (typeof arguments[arg] != 'object') {
+      outStr += arguments[arg];
+    }
   }
   return outStr;
 });
 
 handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
   switch (operator) {
-      case '==':
-          return (v1 == v2) ? options.fn(this) : options.inverse(this);
-      case '===':
-          return (v1 === v2) ? options.fn(this) : options.inverse(this);
-      case '!=':
-          return (v1 != v2) ? options.fn(this) : options.inverse(this);
-      case '!==':
-          return (v1 !== v2) ? options.fn(this) : options.inverse(this);
-      case '<':
-          return (v1 < v2) ? options.fn(this) : options.inverse(this);
-      case '<=':
-          return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-      case '>':
-          return (v1 > v2) ? options.fn(this) : options.inverse(this);
-      case '>=':
-          return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-      case '&&':
-          return (v1 && v2) ? options.fn(this) : options.inverse(this);
-      case '||':
-          return (v1 || v2) ? options.fn(this) : options.inverse(this);
-      default:
-          return options.inverse(this);
+    case '==':
+      return (v1 == v2) ? options.fn(this) : options.inverse(this);
+    case '===':
+      return (v1 === v2) ? options.fn(this) : options.inverse(this);
+    case '!=':
+      return (v1 != v2) ? options.fn(this) : options.inverse(this);
+    case '!==':
+      return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+    case '<':
+      return (v1 < v2) ? options.fn(this) : options.inverse(this);
+    case '<=':
+      return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+    case '>':
+      return (v1 > v2) ? options.fn(this) : options.inverse(this);
+    case '>=':
+      return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+    case '&&':
+      return (v1 && v2) ? options.fn(this) : options.inverse(this);
+    case '||':
+      return (v1 || v2) ? options.fn(this) : options.inverse(this);
+    default:
+      return options.inverse(this);
   }
 });
 
-handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
+handlebars.registerHelper("math", function (lvalue, operator, rvalue, options) {
   lvalue = parseInt(lvalue);
   rvalue = parseInt(rvalue);
-      
+
   return {
-      '+': lvalue + rvalue,
-      '-': lvalue - rvalue,
-      '*': lvalue * rvalue,
-      '/': lvalue / rvalue,
-      '%': lvalue % rvalue
+    '+': lvalue + rvalue,
+    '-': lvalue - rvalue,
+    '*': lvalue * rvalue,
+    '/': lvalue / rvalue,
+    '%': lvalue % rvalue
   }[operator];
 });
 
@@ -131,12 +133,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/vinh',vinhRouter);
+app.use('/auth',authRouter);
+app.use('/vinh', vinhRouter);
 app.use('/', catalogRouter);  // Add catalog routes to middleware chain.
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 //
@@ -151,14 +154,15 @@ function checkAuth(req, res, next) {
 
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  res.locals.currentUser=req.user;
+  res.locals.currentUser = req.user;
   // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
