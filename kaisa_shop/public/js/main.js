@@ -132,13 +132,67 @@ function getCurrentPage(currentURL) {
   return currentPage;
 }
 
-function updateLuotXem() {
-  var currentURL = window.location.href;
-  var soLuotXem = parseInt(localStorage.getItem("soLuotXem" + getCurrentPage(currentURL)));
-  if (soLuotXem)
-    soLuotXem = soLuotXem + 1;
-  else
-    soLuotXem = 1;
-  document.getElementById("soLuotXem").textContent = soLuotXem.toString();
-  localStorage.setItem("soLuotXem" + getCurrentPage(currentURL), soLuotXem.toString());
+function loadGioHang(){
+  var gioHang = sessionStorage.getItem('gioHang');
+  if (gioHang == null)
+    return;
+  var listGioHang = gioHang.split("\n");
+  var row;
+  var listGioHangHTML = "";
+  for (row of listGioHang) {
+    var item = row.split("|");
+    listGioHangHTML = listGioHangHTML + 
+    `
+    <tr>
+      <td>
+          <div class='media'>
+              <div class='d-flex'>
+                  <img src="` + item[0] + `"alt='Hình sản phẩm'>
+              </div>
+              <div class='media-body'>
+                  <p>` + item[1] + `</p>
+              </div>
+          </div>
+      </td>
+      <td>
+          <h5 class="price">VND ` + item[2] + `</h5>
+      </td>
+      <td>
+          <div class='product_count'>
+              <input type='number' name='qty' min='1' value="` + item[3] + `" title='Quantity:' class='input-text qty'>
+          </div>
+      </td>
+      <td>
+          <h5 class="total">VND ` + (parseInt(item[2]) * parseInt(item[3])).toString() + `</h5>
+      </td>
+</tr>
+    `;
+  }
+
+  $("tbody").first().prepend(listGioHangHTML);
+  updateCart();
 }
+
+function updateCart() {
+  var price = [];
+  var quantity = [];
+  var total = [];
+  $(".price").each(function(){
+    var priceText = $(this).text();
+    price.push(parseInt(priceText.substring(4)));
+  });
+  $("input[name='qty']").each(function(){
+    quantity.push($(this).val());
+  });
+  $(".total").each(function(index) {
+    var totalOneItem = price[index] * quantity[index];
+    $(this).text("VND " + totalOneItem);
+    total.push(totalOneItem);
+  });
+  var sumPriceOfAllItem = 0;
+    for (item of total) {
+        sumPriceOfAllItem = sumPriceOfAllItem + item;
+    }
+  $(".total-price").text("VND " + sumPriceOfAllItem);
+}
+

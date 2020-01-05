@@ -4,7 +4,7 @@
   
   {{> elements/head_tag}}
 </head>
-<body>
+<body onload="loadGioHang(); ">
 
   	<!-- ================ start banner area ================= -->	
 	<section class="blog-banner-area" id="category">
@@ -41,7 +41,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr>
+                          {{!-- <tr>
                               <td>
                                   <div class="media">
                                       <div class="d-flex">
@@ -68,66 +68,12 @@
                               <td>
                                   <h5>VND 720.00</h5>
                               </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                  <div class="media">
-                                      <div class="d-flex">
-                                          <img src="img/cart/cart2.png" alt="">
-                                      </div>
-                                      <div class="media-body">
-                                          <p>Mô tả cái gì đó</p>
-                                      </div>
-                                  </div>
-                              </td>
-                              <td>
-                                  <h5>VND 360.00</h5>
-                              </td>
-                              <td>
-                                  <div class="product_count">
-                                      <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                          class="input-text qty">
-                                      <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                          class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                      <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                          class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                  </div>
-                              </td>
-                              <td>
-                                  <h5>VND 720.00</h5>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                  <div class="media">
-                                      <div class="d-flex">
-                                          <img src="img/cart/cart3.png" alt="">
-                                      </div>
-                                      <div class="media-body">
-                                          <p>Mô tả cái gì đó</p>
-                                      </div>
-                                  </div>
-                              </td>
-                              <td>
-                                  <h5>VND 360.00</h5>
-                              </td>
-                              <td>
-                                  <div class="product_count">
-                                      <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                          class="input-text qty">
-                                      <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                          class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                      <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                          class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                  </div>
-                              </td>
-                              <td>
-                                  <h5>VND 720.00</h5>
-                              </td>
-                          </tr>
+                          </tr> --}}
+                          
+                          
                           <tr class="bottom_button">
                               <td>
-                                  <a class="button" href="#">Update Cart</a>
+                                  <a class="button" href="#" onclick="updateCart(); return false;">Update Cart</a>
                               </td>
                               <td>
 
@@ -154,7 +100,7 @@
                                   <h5>Tổng Tiền</h5>
                               </td>
                               <td>
-                                  <h5>VND 2160.00</h5>
+                                  <h5 class="total-price"></h5>
                               </td>
                           </tr>
                           <tr class="shipping_area">

@@ -6,7 +6,15 @@
 	{{> elements/head_tag}}
 </head>
 
-<body onload="updateLuotXem(); ">
+<body onload="
+var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
+  	if (soLuotXem)
+    	soLuotXem = soLuotXem + 1;
+  	else
+    	soLuotXem = 1;
+  	document.getElementById('soLuotXem').textContent = soLuotXem.toString();
+  	localStorage.setItem('{{baseUrl}}', soLuotXem.toString());
+ ">
 
 
 	<!-- ================ start banner area ================= -->
@@ -60,12 +68,23 @@
 							<button
 								onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
 								class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
-							<input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:"
+							<input type="number" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:"
 								class="input-text qty">
 							<button
 								onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
 								class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
-							<a class="button primary-btn" href="#">Add to Cart</a>
+							<a class="button primary-btn" onclick="
+								var gioHang = sessionStorage.getItem('gioHang');
+                          		if (gioHang == null)
+									sessionStorage.setItem('gioHang', 'img/product/{{data.anhSanPham}}|{{data.tenSanPham}}|{{data.giaSanPham}}|' + document.getElementById('sst').value);
+								else
+									sessionStorage.setItem('gioHang', gioHang + '\n' + 'img/product/{{data.anhSanPham}}|{{data.tenSanPham}}|{{data.giaSanPham}}|' + document.getElementById('sst').value);
+								var soLuongGioHang = parseInt(sessionStorage.getItem('soLuongGioHang'));
+								soLuongGioHang = soLuongGioHang + 1;
+								sessionStorage.setItem('soLuongGioHang', soLuongGioHang.toString());
+								document.getElementById('soLuongGioHang').innerHTML = soLuongGioHang.toString();
+								return false;
+							" href="#">Add to Cart</a>
 						</div>
 						<div class="card_area d-flex align-items-center">
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
@@ -326,7 +345,7 @@
 										</div>
 									</div>
 									<div class="col-md-12 text-right">
-										<button type="submit" value="submit" class="btn primary-btn" onclick=" document.getElementById('name').value = '{{currentUser.email}}'; ">Submit Now</button>
+										<button type="submit" value="submit" class="btn primary-btn" onclick="document.getElementById('name').value = '{{currentUser.local.email}}'; return true; ">Submit Now</button>
 									</div>
 								</form>
 							</div>

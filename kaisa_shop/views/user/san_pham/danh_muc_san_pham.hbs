@@ -7,7 +7,7 @@
 
 </head>
 
-<body>
+<body >
 
   <!-- ================ start banner area ================= -->
   <section class="blog-banner-area" id="category">
@@ -184,7 +184,22 @@
                       <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
                       <ul class="card-product__imgOverlay">
                         <li><button><i class="ti-search"></i></button></li>
-                        <li><button><i class="ti-shopping-cart"></i></button></li>
+                        <li><button onclick="
+                          var gioHang = sessionStorage.getItem('gioHang');
+                          if (gioHang == null)
+											      sessionStorage.setItem('gioHang', 'img/product/{{anhSanPham}}|{{tenSanPham}}|{{giaSanPham}}|1');
+										      else
+											      sessionStorage.setItem('gioHang', gioHang + '\n' + 'img/product/{{anhSanPham}}|{{tenSanPham}}|{{giaSanPham}}|1');
+                          var soLuongGioHang;
+                          if (sessionStorage.getItem('soLuongGioHang') == null)
+                            soLuongGioHang = 0;
+                          else
+                            soLuongGioHang = parseInt(sessionStorage.getItem('soLuongGioHang'));
+                          soLuongGioHang = soLuongGioHang + 1;
+                          sessionStorage.setItem('soLuongGioHang', soLuongGioHang.toString());
+                          document.getElementById('soLuongGioHang').innerHTML = soLuongGioHang.toString();
+                        "><i class="ti-shopping-cart"
+                        ></i></button></li>
                         <li><button><i class="ti-heart"></i></button></li>
                       </ul>
                     </div>

@@ -1,5 +1,13 @@
 <!--================ Start Header Menu Area =================-->
 <header class="header_area">
+  <script type="text/javascript">
+    if (sessionStorage.getItem('soLuongGioHang') == null) {
+    document.getElementById('soLuongGioHang').innerHTML = '0';
+    sessionStorage.setItem('soLuongGioHang', '0');
+      }
+  else
+      document.getElementById('soLuongGioHang').innerHTML = sessionStorage.getItem('soLuongGioHang');
+  </script>
   <div class="main_menu">
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container">
@@ -50,7 +58,7 @@
           <ul class="nav-shop">
             <li class="nav-item"><a href="/users/tim_kiem"><button><i class="ti-search"></i></button></a></li>
             <li class="nav-item"><a href="/users/mua_hang/gio_hang"><button><i class="ti-shopping-cart"></i><span
-                    class="nav-shop__circle">3</span></button> </a></li>
+                    class="nav-shop__circle" id="soLuongGioHang"></span></button> </a></li>
             {{!-- <li class="nav-item"><a class="button button-header" href="/users/san_pham/danh_muc_san_pham">Mua Ngay</a></li> --}}
              <li class="nav-item"><a class="button button-header" href="/logout">Đăng xuất</a></li>
              <li class="nav-item"><a id="username">{{usr}} </a></li>
