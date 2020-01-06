@@ -25,10 +25,7 @@ router.get('/mua_hang/xac_nhan', function (req, res, next) {
   //res.send('user/san_pham');
   res.render('./user/mua_hang/xac_nhan', { title: 'Xác Nhận Đơn Hàng' });
 });
-router.get('/mua_hang/gio_hang', function (req, res, next) {
-  //res.send('user/san_pham');
-  res.render('./user/mua_hang/gio_hang', { title: 'Giỏ Hàng' });
-});
+
 
 //################################################################
 
@@ -107,6 +104,8 @@ router.post('/tai_khoan/dang_nhap',
   })
 );
 
+
+// @@@@@@@@@@@@@@ RESET PASSWORD ##################################
 router.get('/tai_khoan/reset_password', function (req, res, next) {
   res.render('./user/tai_khoan/reset_password', {});
 });
@@ -138,6 +137,7 @@ router.post('/tai_khoan/reset_password', function (req, res, next) {
   });
 
 });
+// token
 var tk;
 router.get('/tai_khoan/new_password/:token', function (req, res, next) {
   tk = req.params.token;
