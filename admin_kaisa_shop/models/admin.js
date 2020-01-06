@@ -10,6 +10,7 @@ const admin=new mongoose.Schema({
     birthday: {type: String},
     address:{type: String, required:false},
     company: {type: String, required:false},
+    avatar:{type:String, required:false},
     permission: {type: String, required:false}
 },{collection:'admin'});
 

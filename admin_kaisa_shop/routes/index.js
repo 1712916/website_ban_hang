@@ -3,6 +3,7 @@ var router = express.Router();
 const Passport=require('passport');
 const Admin=require('../models/admin');
 const Products=require('../models/sanPham');
+const multer = require('multer');
 
 
 
@@ -256,6 +257,90 @@ router.get('/tat_ca_san_pham', function(req, res, next) {
   
 
 // });
+
+const imageFilter = function(req, file, cb) {
+  // Accept images only
+  if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+      req.fileValidationError = 'Only image files are allowed!';
+      return cb(new Error('Only image files are allowed!'), false);
+  }
+  cb(null, true);
+};
+
+router.post('/upload_avatar_admin/:_id', function (req, res, next) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+  //console.log("Tên file:"+req.body.file.path);
+  const id=req.params._id;
+  const storage=multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/avatars/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, id+'.jpg');
+    }
+  });
+  let upload = multer({ storage: storage, fileFilter: imageFilter }).single('file');
+
+  upload(req, res, function (err) {
+    // req.file contains information of uploaded file
+    // req.body contains information of text fields, if there were any
+    
+    if (req.fileValidationError) {
+      //return res.render('index', { message: req.fileValidationError });
+      if(id==req.user._id){
+        return res.redirect('/profile');
+       }
+       return res.redirect('/ds_thanh_vien/thanh_vien_1/'+id); 
+
+    }
+    else if (!req.file) {
+      //return res.render('index', { message: 'Please select an image to upload' });
+      if(id==req.user._id){
+        return res.redirect('/profile');
+       }
+       return res.redirect('/ds_thanh_vien/thanh_vien_1/'+id); 
+
+    }
+    else if (err instanceof multer.MulterError) {
+      //return res.render('index', { message: err });
+      if(id==req.user._id){
+        return res.redirect('/profile');
+       }
+       return res.redirect('/ds_thanh_vien/thanh_vien_1/'+id); 
+    }
+    else if (err) {
+     // return res.render('index', { message: err });
+     if(id==req.user._id){
+      return res.redirect('/profile');
+     }
+     return res.redirect('/ds_thanh_vien/thanh_vien_1/'+id); 
+
+    }
+
+
+        
+
+      const update = { avatar:id+'.jpg'};
+      console.log("Toi day ngon nek: "+id);   
+      Admin.findByIdAndUpdate(id,update,function(err,res){
+          if(err){
+            //res.send("Thay đổi không thành công!");
+            return  res.redirect('/');
+          }
+       
+      } )
+
+      if(id==req.user._id){
+        return res.redirect('/profile');
+       }
+       return res.redirect('/ds_thanh_vien/thanh_vien_1/'+id); 
+
+   
+  });
+});
+
+
 
 
 
