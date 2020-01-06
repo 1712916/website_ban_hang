@@ -1,0 +1,99 @@
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <!-- BREADCRUMB-->
+
+    <!-- END BREADCRUMB-->
+
+
+
+    <section>
+        <div class="section__content ">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <!-- USER DATA-->
+                        <div class="user-data m-b-40">
+                            <h3 class="title-3 m-b-30">
+                                <i class="zmdi zmdi-account-calendar"></i>Danh sách người dùng</h3>
+                            <div class="filters m-b-45">
+                                <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
+                                    <select class="js-select2" name="property">
+                                        <option selected="selected">Tất cả vai trò</option>
+                                        <option value="">Người quản lý</option>
+                                        <option value="">Cộng tác viên</option>
+                                        <option value="">Người dùng</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <div class="rs-select2--dark rs-select2--sm rs-select2--border">
+                                    <select class="js-select2 au-select-dark" name="time">
+                                        <option selected="selected">Tất cả</option>
+                                        <option value="">Theo tháng</option>
+                                        <option value="">Theo ngày</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                            </div>
+                            <div class="table">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td>Tài khoản</td>
+                                            <td>Vai trò</td>
+                                            <td>Tình trạng</td>
+                                            <td>Cấp quyền truy cập</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each listAdmin}}
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td>
+                                                <div class="table-data__info">
+                                                    <h6>{{name}}</h6>
+                                                    <span>
+                                                        <a href="/ds_thanh_vien/thanh_vien_1/{{_id}}">{{email}}</a>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="role admin">Người bán hàng</span>
+                                            </td>
+                                            <td>
+                                                {{permissionStatusHelper permission}}
+                                               
+                                                
+                                            </td>
+                                            <td>
+                                            <form action="/update_permission/{{_id}}" method="POST">
+                                                 {{permissionHelper permission}}
+                                            </form>
+                                           
+                                            </td>
+                                        </tr>
+
+                                        {{/each}}
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="user-data__footer">
+                                {{>elements/pagination}}
+                                {{!-- <button class="au-btn au-btn-load">Xêm thêm</button> --}}
+                            </div>
+                        </div>
+                        <!-- END USER DATA-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,254 @@
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <div class="section__content">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title mb-3">Thông tin sản phẩm</strong>
+                        </div>
+                        <div class="row card-body">
+                            <div class="col-md-6">
+                                <a>a</a>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">Tên sản phẩm :</div>
+                                    <div class="col-md-8">{{product.tenSanPham}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">Loại sản phẩm :</div>
+                                    <div class="col-md-8">{{product.loaiSanPham}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">Nhà sản xuất :</div>
+                                    <div class="col-md-8">{{product.nhaSanXuat}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">Giá :</div>
+                                    <div class="col-md-8">{{product.giaSanPham}} VND</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">CPU :</div>
+                                    <div class="col-md-8">{{product.configuration.cpu}}</div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-4">Ổ cứng :</div>
+                                    <div class="col-md-8">{{product.configuration.hardDisk}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">Ram :</div>
+                                    <div class="col-md-8">{{product.configuration.ram}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">Màn hình :</div>
+                                    <div class="col-md-8">{{product.configuration.screen}}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">Đồ họa :</div>
+                                    <div class="col-md-8">{{product.configuration.graphic}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">Hệ điều hành :</div>
+                                    <div class="col-md-8">{{product.configuration.os}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">Màu sắc :</div>
+                                    <div class="col-md-8">{{product.configuration.color}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">Số lượng :</div>
+                                    <div class="col-md-8">{{product.soLuongSanPham}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">Mô tả:</div>
+                                    <div class="col-md-8">{{product.moTaSanPham}}</div>
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+                        <div class="row card-footer text-muted justify-content-center">
+                            <i class="fas fa-edit" data-toggle="modal" data-target="#editProduct"
+                                style="font-size:36px"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editProduct">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+                <form action="/update_product/{{product._id}}" method="POST">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Tùy chỉnh thông tin sản phẩm</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body ">
+                
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="name">Tên sản phẩm</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="tenSanPham" name="tenSanPham"
+                                value="{{product.tenSanPham}}">
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="name">Nhà sản xuất</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="nhaSanXuat" name="nhaSanXuat"
+                                value="{{product.nhaSanXuat}}">
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="name">Loại sản phẩm</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="loaiSanPham" name="loaiSanPham"
+                                value="{{product.loaiSanPham}}">
+                        </div>
+
+                    </div>
+                    
+
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="birthday">Giá</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="giaSanPham" name="giaSanPham"
+                                value="{{product.giaSanPham}}">
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="phone">CPU</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="cpu" name="cpu" value="{{product.configuration.cpu}}">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="address">Ổ cứng</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="hardDisk" name="hardDisk"
+                                value="{{product.configuration.hardDisk}}">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="company">Ram</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="ram" name="ram" value="{{product.configuration.ram}}">
+                        </div>
+
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="company">Màn hình</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="screen" name="screen" value="{{product.configuration.screen}}">
+                        </div>
+
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="company">Đồ họa</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="graphic" name="graphic"
+                                value="{{product.configuration.graphic}}">
+                        </div>
+
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="company">Hệ điều hành</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="os" name="os" value="{{product.configuration.os}}">
+                        </div>
+
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="company">Màu sắc</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="color" name="color" value="{{product.configuration.color}}">
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="company">Số lượng sản phẩm</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="soLuongSanPham" name="soLuongSanPham"
+                                value="{{product.soLuongSanPham}}">
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label class="text-info" for="company">Mô tả</label>
+                        </div>
+                        <div class="col col-md-8">
+                            <input type="text" class="form-control" id="moTaSanPham" name="moTaSanPham"
+                                value="{{product.moTaSanPham}}">
+                        </div>
+
+                    </div>
+                
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
+                <button type="submit" class="btn btn-success">Lưu</button>
+            </div>
+
+
+        </div>
+        </form>
+
+
+    </div>
+</div>

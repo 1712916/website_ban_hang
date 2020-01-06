@@ -13,11 +13,15 @@ Handlebars.registerHelper("permissionStatusHelper",function(status){
   else if(status=="-1"){
     return new Handlebars.SafeString('<button type="submit" class="btn btn-secondary">'+"Khóa"+"</button>");
   }
-  else if(status=="1"){
+  else if(status=="1"||status=="999"){
     return new Handlebars.SafeString('<button type="submit" class="btn btn-success">'+"Mở"+"</button>");
   }
 });
 Handlebars.registerHelper("permissionHelper",function(permission){
+  if(permission=="999")
+  {
+    return null;
+  }
   if(permission=="1"){
     return new Handlebars.SafeString('<button type="submit" class="btn btn-secondary">'+'Khóa'+'</button>');
   }else{
@@ -25,12 +29,16 @@ Handlebars.registerHelper("permissionHelper",function(permission){
   }
 });
 
+Handlebars.registerHelper("isSuperAdmin",function(permission,options){
+  if(permission=="999"){
+    return options.fn(this);
+  }
+});
 
-
-Handlebars.registerHelper("paginationHelper",function(current,total){
+Handlebars.registerHelper("paginationHelper",function(current,total,link){
   var start;
   var end;
-  var href="/ds_thanh_vien";
+  var href=link;
 
   start=current-2;
   if(start<1){

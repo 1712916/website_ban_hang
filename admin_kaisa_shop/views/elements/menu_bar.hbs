@@ -9,25 +9,27 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
+                        {{#isSuperAdmin headProfile.permission}}
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Danh sách</a>
+                                <i class="fas fa-tachometer-alt"></i>Quản lý danh sách</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="/#">Sản phẩm</a>
                                 </li>
                                 <li>
-                                    <a href="/">Sản phẩm đã bán</a>
-                                </li>
-                                <li>
-                                    <a href="/ds_thanh_vien">Thành viên</a>
-                                </li>
-                                <li>
                                     <a href="/ds_don_hang">Đơn hàng</a>
                                 </li>
-                         
+                                <li>
+                                    <a href="/ds_thanh_vien">Người bán hàng</a>
+                                </li>
+                                 <li>
+                                    <a href="/ds_khach_hang">Khách hàng</a>
+                                </li>
+                               
                             </ul>
                         </li>
+                        {{/isSuperAdmin}}
                         <li>
                             <a href="#">
                                 <i class="fas fa-chart-bar"></i>Biểu đồ</a>
@@ -37,8 +39,12 @@
                                 <i class="fas fa-chart-bar"></i>Top sản phẩm bán chạy</a>
                         </li>
                          <li>
-                            <a href="/tat_ca_san_pham">
-                                <i class="fas fa-chart-bar"></i>Tất cả sản phẩm</a>
+                            <a href="/ds_san_pham">
+                                <i class="fas fa-chart-bar"></i>Sản phẩm</a>
+                        </li>
+                        <li>
+                            <a href="/ds_don_hang">
+                                <i class="fas fa-chart-bar"></i>Đơn hàng</a>
                         </li>
              
                         

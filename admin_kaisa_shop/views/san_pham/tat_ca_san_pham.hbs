@@ -1,44 +1,66 @@
 <!-- MAIN CONTENT-->
 <div class="main-content">
-    <div class="section__content section__content--p30">
-        <div class="container-fluid">
+    <!-- BREADCRUMB-->
 
-        
+    <!-- END BREADCRUMB-->
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h2 class="title-1 m-b-25">Danh sách tất cả sản phẩm</h2>
-            </div>
-             <button class="au-btn au-btn-icon au-btn--green">
-            <i class="zmdi zmdi-plus"></i>Thêm sản phẩm</button>
-            </div>
-            <div class="table-responsive table--no-card m-b-40">
-                <table class="table table-borderless table-striped table-earning">
-                    <thead>
-                        <tr>
-                            <th>Mã</th>
-                            <th>Tên </th>
-                            <th class="text-right">Giá</th>
-                            <th>Ngày nhập</th>
-                            <th>Ngày bán</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each listProduct}}
-                            <tr>
-                                <td>100398</td>
-                                <td>{{tenSanPham}}</td>
-                                <td class="text-right">{{giaSanPham}}</td>
-                            </tr>
-                        {{/each}}
-                        
-                        
-                    </tbody>
-                </table>
+
+
+    <section>
+        <div class="section__content ">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <!-- USER DATA-->
+                        <div class="user-data m-b-40">
+                            <h3 class="title-3 m-b-30">
+                                <i class="zmdi zmdi-account-calendar"></i>Danh sách sản phẩm</h3>
+                              <div class="filters m-b-45">
+                                <div class="row justify-content-end">
+                                    
+                                      <button class="btn btn-success">Thêm sản phẩm</button>
+                                </div>
+                            </div>
+                            <div class="table">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td>Tên Sản Phẩm</td>
+                                            <td>Giá</td>
+                                            <td>Số lượng</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each listProduct}}
+                                            <tr>
+                                                <td></td>
+                                                <td>{{tenSanPham}}</td>
+                                                <td >{{giaSanPham}}</td>
+                                                <td>{{soLuongSanPham}}</td>
+                                                <td><a href="/chi_tiet_san_pham/{{_id}}"><button class="btn btn-success">Xêm thêm</button></a></td>
+                                                <td><form action="/delete_product/{{_id}}" method="POST"><button type="submit" class="btn btn-danger">Xóa</button></a></form></td>
+                                            </tr>
+                                        {{/each}}
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="user-data__footer">
+                                {{>elements/pagination}}
+                                {{!-- <button class="au-btn au-btn-load">Xêm thêm</button> --}}
+                            </div>
+                        </div>
+                        <!-- END USER DATA-->
+                    </div>
+
+                </div>
             </div>
         </div>
+    </section>
+</div>
 
-    </div>
-</div>
-</div>
-</div>
+
