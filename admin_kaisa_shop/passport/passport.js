@@ -89,6 +89,15 @@ Passport.use('local.signin',new LocalStrategy({
               req.flash('email',email);
            return done(null,false,req.flash('message','Sai mật khẩu hoặc tài khoản.'));
         }
+        if(admin.permission=="0"){
+            req.flash('email',email);
+            return done(null,false,req.flash('message','Tài khoản cần được cấp quyền truy cập hệ thống.'));
+        }
+        if(admin.permission=="-1"){
+            req.flash('email',email);
+            return done(null,false,req.flash('message','Tài khoản của bạn bị khóa.'));
+        }
+        
         return done(null,admin);
     });
 }));

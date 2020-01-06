@@ -43,8 +43,8 @@
                                             </td>
                                             <td>Tài khoản</td>
                                             <td>Vai trò</td>
-                                            <td>Chức năng</td>
-                                            <td>Thay đổi</td>
+                                            <td>Tình trạng</td>
+                                            <td>Cấp quyền truy cập</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,22 +62,18 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="role admin">Người quản lý</span>
+                                                <span class="role admin">Người bán hàng</span>
                                             </td>
                                             <td>
-                                                <div class="rs-select2--trans rs-select2--sm">
-                                                    <select class="js-select2" name="property">
-                                                        <option selected="selected">Toàn quyền</option>
-                                                        <option value="">Đăng bài</option>
-                                                        <option value="">Chỉ xem</option>
-                                                    </select>
-                                                    <div class="dropDownSelect2"></div>
-                                                </div>
+                                                {{permissionStatusHelper permission}}
+                                               
+                                                
                                             </td>
                                             <td>
-                                                <span class="more">
-                                                    <i class="zmdi zmdi-more"></i>
-                                                </span>
+                                            <form action="/update_permission/{{_id}}" method="POST">
+                                                 {{permissionHelper permission}}
+                                            </form>
+                                           
                                             </td>
                                         </tr>
 

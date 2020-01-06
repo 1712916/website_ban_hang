@@ -6,6 +6,26 @@ Handlebars.registerHelper("messageHelper",function(message,options){
   }
 });
 
+Handlebars.registerHelper("permissionStatusHelper",function(status){
+  if(status=="0"){
+      return new Handlebars.SafeString('<button type="submit" class="btn btn-primary">'+"Mới tạo"+"</button>");
+  }
+  else if(status=="-1"){
+    return new Handlebars.SafeString('<button type="submit" class="btn btn-secondary">'+"Khóa"+"</button>");
+  }
+  else if(status=="1"){
+    return new Handlebars.SafeString('<button type="submit" class="btn btn-success">'+"Mở"+"</button>");
+  }
+});
+Handlebars.registerHelper("permissionHelper",function(permission){
+  if(permission=="1"){
+    return new Handlebars.SafeString('<button type="submit" class="btn btn-secondary">'+'Khóa'+'</button>');
+  }else{
+    return new Handlebars.SafeString('<button type="submit" class="btn btn-success">'+'Mở'+'</button>');
+  }
+});
+
+
 
 Handlebars.registerHelper("paginationHelper",function(current,total){
   var start;
