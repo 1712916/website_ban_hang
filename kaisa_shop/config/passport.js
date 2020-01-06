@@ -5,6 +5,8 @@ var passport = require('passport');
 var User = require('../models/user.model');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var randomstring = require('randomstring');
+var nodemailer = require("nodemailer");
 // passport session setup
 // Lấy thông tin những giá trị auth
 var configAuth = require('./auth');
@@ -20,6 +22,23 @@ passport.deserializeUser(function (id, done) {
     done(err, user);
   })
 })
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'fungviet@gmail.com',
+    pass: 'cqcgleoecjuwuppl'
+  }
+});
+
+// transporter.sendMail(mailOptions, function(error, info){
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('Email sent: ' + info.response);
+//   }
+// });
+
 // local sign-up
 passport.use('local-signup', new LocalStrategy({
   usernameField: 'email',
@@ -37,14 +56,38 @@ passport.use('local-signup', new LocalStrategy({
           return done(null, false, { message: 'Email is already in use.' })
         }
         var newUser = new User();
+        var permalink = req.body.email.toLowerCase().replace(' ', '').replace(/[^\w\s]/gi, '').trim();
+        var verification_token = randomstring.generate({
+          length: 64
+        });
         newUser.local.email = email;
         newUser.local.password = newUser.encryptPassword(password);
-        newUser.save(function (err, result) {
-          if (err) {
-            return done(err)
+        newUser.local.verified = false;
+        newUser.local.verify_token = verification_token;
+
+        var mailOptions = {
+          from: 'fungviet@gmail.com',
+          to: email,
+          subject: 'Veryfy',
+          text: 'Click to this link for veryfy: ' +  `http://localhost:9999/comfirmation/${verification_token}`,
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
           }
-          return done(null, newUser);
-        })
+        });
+        newUser.save(function (err) {
+          if (err) {
+            console.log(err);
+
+          } else {
+            return done(null, newUser);
+          }
+        });
+
       });
     }
   }
@@ -103,7 +146,7 @@ passport.use(new FacebookStrategy({
           // nếu chưa có, tạo mới user
           var newUser = new User();
           // lưu các thông tin cho user
-       
+
           newUser.facebook.id = profile.id;
           newUser.facebook.token = token;
           newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName; // bạn có thể log đối tượng profile để xem cấu trúc
