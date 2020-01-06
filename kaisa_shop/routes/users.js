@@ -17,10 +17,7 @@ router.get('/mua_hang/xac_nhan', function (req, res, next) {
   //res.send('user/san_pham');
   res.render('./user/mua_hang/xac_nhan', { title: 'Xác Nhận Đơn Hàng' });
 });
-router.get('/mua_hang/gio_hang', function (req, res, next) {
-  //res.send('user/san_pham');
-  res.render('./user/mua_hang/gio_hang', { title: 'Giỏ Hàng' });
-});
+
 
 //################################################################
 

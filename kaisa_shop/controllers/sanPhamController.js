@@ -23,13 +23,27 @@ exports.danhMucSanPham = function (req, res, next) {
         if (err) {
           return next(err);
         }
-        res.render('./user/san_pham/danh_muc_san_pham', {
-          title: 'Kaisa Shop',
-          data: products,
-          current: req.params.current_page,
-          pages: Math.ceil(count / itemPerPage),
-          baseUrl: '/users/san_pham/danh_muc_san_pham'
-        });
+        console.log('thong tin req user: ' + req.user);
+        if (req.isAuthenticated()) {
+          res.render('./user/san_pham/danh_muc_san_pham', {
+            title: 'Kaisa Shop',
+            data: products,
+            current: req.params.current_page,
+            pages: Math.ceil(count / itemPerPage),
+            baseUrl: '/users/san_pham/danh_muc_san_pham',
+            currentUser: req.user
+          });
+        }
+        else {
+          res.render('./user/san_pham/danh_muc_san_pham', {
+            title: 'Kaisa Shop',
+            data: products,
+            current: req.params.current_page,
+            pages: Math.ceil(count / itemPerPage),
+            baseUrl: '/users/san_pham/danh_muc_san_pham',
+            currentUser: req.user
+          });
+        }
       });
 
     });
@@ -386,7 +400,8 @@ exports.updateChiTietSanPham = function (req, res, next) {
               commentData: comment,
               currentPage: req.params.current_page,
               commentPages: Math.ceil(count / commentPerPage),
-              baseUrl: '/chi_tiet_sp/' + id
+              baseUrl: '/chi_tiet_sp/' + id,
+              currentUser: req.user
             });
           });
         });

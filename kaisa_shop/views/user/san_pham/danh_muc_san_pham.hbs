@@ -7,7 +7,7 @@
 
 </head>
 
-<body >
+<body>
 
   <!-- ================ start banner area ================= -->
   <section class="blog-banner-area" id="category">
@@ -176,41 +176,80 @@
             <div class="row">
               <div class="row">
                 <!--===========Data từ dữ liệu==========-->
-                {{#each data}}
-
-                <div class="col-md-6 col-lg-4">
-                  <div class="card text-center card-product">
-                    <div class="card-product__img">
-                      <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
-                      <ul class="card-product__imgOverlay">
-                        <li><button><i class="ti-search"></i></button></li>
-                        <li><button onclick="
-                          var gioHang = sessionStorage.getItem('gioHang');
-                          if (gioHang == null)
-											      sessionStorage.setItem('gioHang', 'img/product/{{anhSanPham}}|{{tenSanPham}}|{{giaSanPham}}|1');
-										      else
-											      sessionStorage.setItem('gioHang', gioHang + '\n' + 'img/product/{{anhSanPham}}|{{tenSanPham}}|{{giaSanPham}}|1');
-                          var soLuongGioHang;
-                          if (sessionStorage.getItem('soLuongGioHang') == null)
-                            soLuongGioHang = 0;
-                          else
-                            soLuongGioHang = parseInt(sessionStorage.getItem('soLuongGioHang'));
-                          soLuongGioHang = soLuongGioHang + 1;
-                          sessionStorage.setItem('soLuongGioHang', soLuongGioHang.toString());
-                          document.getElementById('soLuongGioHang').innerHTML = soLuongGioHang.toString();
-                        "><i class="ti-shopping-cart"
-                        ></i></button></li>
-                        <li><button><i class="ti-heart"></i></button></li>
-                      </ul>
-                    </div>
-                    <div class="card-body">
-                      <p>{{loaiSanPham}}</p>
-                      <h4 class="card-product__title"><a href="/chi_tiet_sp/{{_id}}/1">{{tenSanPham}}</a></h4>
-                      <p class="card-product__price">VND {{giaSanPham}}</p>
+                {{!-- {{#ifCond isLogin '==' false}} --}}
+                {{#ifCond currentUser '==' undefined}}
+                  {{#each data}}
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card text-center card-product">
+                      <div class="card-product__img">
+                        <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
+                        <ul class="card-product__imgOverlay">
+                          <li><button><i class="ti-search"></i></button></li>
+                          <li><button onclick="
+                              var gioHang = sessionStorage.getItem('gioHang');
+                              if (gioHang == null)
+                                sessionStorage.setItem('gioHang', 'img/product/{{anhSanPham}}|{{tenSanPham}}|{{giaSanPham}}|1');
+                              else
+                                sessionStorage.setItem('gioHang', gioHang + '\n' + 'img/product/{{anhSanPham}}|{{tenSanPham}}|{{giaSanPham}}|1');
+                              var soLuongGioHang;
+                              if (sessionStorage.getItem('soLuongGioHang') == null)
+                                soLuongGioHang = 0;
+                              else
+                                soLuongGioHang = parseInt(sessionStorage.getItem('soLuongGioHang'));
+                              soLuongGioHang = soLuongGioHang + 1;
+                              sessionStorage.setItem('soLuongGioHang', soLuongGioHang.toString());
+                              document.getElementById('soLuongGioHang').innerHTML = soLuongGioHang.toString();
+                          "><i class="ti-shopping-cart"></i></button></li>
+                          <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                      </div>
+                      <div class="card-body">
+                        <p>{{loaiSanPham}}</p>
+                        <h4 class="card-product__title"><a href="/chi_tiet_sp/{{_id}}/1">{{tenSanPham}}</a></h4>
+                        <p class="card-product__price">VND {{giaSanPham}}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {{/each}}
+                  {{/each}}
+
+                {{else}}
+                  <p id="idCurrentUser" style="display: none">{{currentUser._id}}</p>
+                  {{!-- {{#repeat count=data.length start=0}} --}}
+                  {{#each data}}
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card text-center card-product">
+                      <div class="card-product__img">
+                        <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
+                        <ul class="card-product__imgOverlay">
+                          <li><button><i class="ti-search"></i></button></li>
+                          <li>
+                            <form action="/users/mua_hang/gio_hang" method="post" >
+                              <input id="iduser" name="iduser" type="text" style="display: none" />
+                              <input name="hinh" type="text" value="img/product/{{anhSanPham}}" style="display: none" />
+                              <input name="ten" type="text" value="{{tenSanPham}}" style="display: none" />
+                              <input name="gia" type="number" value={{giaSanPham}} style="display: none" />
+                              <input name="soluong" type="number" value=1 style="display: none" />
+                              <button type="submit" onclick="
+                              this.parentNode.firstElementChild.value = document.getElementById('idCurrentUser').innerHTML;
+                              return true;
+                            ">
+                          </form>
+                          <i class="ti-shopping-cart"></i></button></li>
+
+                          <li><button><i class="ti-heart"></i></button></li>
+                        </ul>
+                      </div>
+                      <div class="card-body">
+                        <p>{{loaiSanPham}}</p>
+                        <h4 class="card-product__title"><a href="/chi_tiet_sp/{{_id}}/1">{{tenSanPham}}</a></h4>
+                        <p class="card-product__price">VND {{giaSanPham}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  {{/each}}
+                  {{!-- {{/repeat}} --}}
+                {{/ifCond}}
+
                 {{!-- {{#each data}}
        
           <div class="col-md-6 col-lg-4">
@@ -249,12 +288,11 @@
 
               {{!-- {{pages}} --}}
               {{#ifCond pages '>' 0}}
-                {{#ifCond current '==' 1}}
-                <li class="page-item disabled"><a class="page-link">prev</a></li>
-                {{else}}
-                <li class="page-item"><a class="page-link"
-                    href={{concat baseUrl '/' (math current '-' 1)}}>prev</a></li>
-                {{/ifCond}}
+              {{#ifCond current '==' 1}}
+              <li class="page-item disabled"><a class="page-link">prev</a></li>
+              {{else}}
+              <li class="page-item"><a class="page-link" href={{concat baseUrl '/' (math current '-' 1)}}>prev</a></li>
+              {{/ifCond}}
 
               {{!-- {{#ifCond (math pages '-' current) '>' 1}}
                 <li class="active page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' current}}> {{current}}</a></li>
@@ -267,42 +305,42 @@
                 <li class="page-item"><a class="page-link" href={{concat '/users/san_pham/danh_muc_san_pham/' @index}}>{{@index}}</a></li>
                 {{/repeat}}
               {{/ifCond}} --}}
-              
-                {{#ifCond current '<=' (math (math (math pages '-' 1) '/' 5) '*' 5)}}
-                  {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
-                    {{#ifCond current '==' @index}}
-                      <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
-                    {{else}}
-                      <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
-                    {{/ifCond}}
-                  {{/repeat}}
 
-                {{else}}
-                  {{#ifCond (math pages '%' 5) '==' 0}}
-                    {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
-                      {{#ifCond current '==' @index}}
-                        <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
-                      {{else}}
-                        <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
-                      {{/ifCond}}
-                    {{/repeat}}
+              {{#ifCond current '<=' (math (math (math pages '-' 1) '/' 5) '*' 5)}}
+              {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+              {{#ifCond current '==' @index}}
+              <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+              {{else}}
+              <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+              {{/ifCond}}
+              {{/repeat}}
 
-                  {{else}}
-                    {{#repeat count=(math pages '%' 5) start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
-                      {{#ifCond current '==' @index}} 
-                        <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
-                      {{else}}
-                        <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
-                      {{/ifCond}}
-                    {{/repeat}}
-                  {{/ifCond}}
-                {{/ifCond}}
+              {{else}}
+              {{#ifCond (math pages '%' 5) '==' 0}}
+              {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+              {{#ifCond current '==' @index}}
+              <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+              {{else}}
+              <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+              {{/ifCond}}
+              {{/repeat}}
 
-                {{#ifCond current '==' pages}}
-                  <li class="page-item disabled"><a class="page-link">next</a></li>
-                {{else}}
-                  <li class="page-item"><a class="page-link" href={{concat baseUrl '/' (math current '+' 1)}}>next</a></li>
-                {{/ifCond}}
+              {{else}}
+              {{#repeat count=(math pages '%' 5) start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+              {{#ifCond current '==' @index}}
+              <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+              {{else}}
+              <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+              {{/ifCond}}
+              {{/repeat}}
+              {{/ifCond}}
+              {{/ifCond}}
+
+              {{#ifCond current '==' pages}}
+              <li class="page-item disabled"><a class="page-link">next</a></li>
+              {{else}}
+              <li class="page-item"><a class="page-link" href={{concat baseUrl '/' (math current '+' 1)}}>next</a></li>
+              {{/ifCond}}
               {{/ifCond}}
             </ul>
           </div>

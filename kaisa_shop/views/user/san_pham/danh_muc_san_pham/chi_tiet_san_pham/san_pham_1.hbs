@@ -14,6 +14,9 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
     	soLuotXem = 1;
   	document.getElementById('soLuotXem').textContent = soLuotXem.toString();
   	localStorage.setItem('{{baseUrl}}', soLuotXem.toString());
+	  if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+}
  ">
 
 
@@ -65,15 +68,10 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
 						<p>Mô Tả: {{data.moTaSanPham}}</p>
 						<div class="product_count">
 							<label for="qty">Quantity:</label>
-							<button
-								onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-								class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
-							<input type="number" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:"
+							<input type="number" name="qty" id="sst" size="2" min="1" maxlength="12" value="1" title="Quantity:"
 								class="input-text qty">
-							<button
-								onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-								class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
-							<a class="button primary-btn" onclick="
+							{{#ifCond currentUser '==' undefined}}
+							<button class="btn bg-primary btn-primary" onclick="
 								var gioHang = sessionStorage.getItem('gioHang');
                           		if (gioHang == null)
 									sessionStorage.setItem('gioHang', 'img/product/{{data.anhSanPham}}|{{data.tenSanPham}}|{{data.giaSanPham}}|' + document.getElementById('sst').value);
@@ -84,7 +82,22 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
 								sessionStorage.setItem('soLuongGioHang', soLuongGioHang.toString());
 								document.getElementById('soLuongGioHang').innerHTML = soLuongGioHang.toString();
 								return false;
-							" href="#">Add to Cart</a>
+							" >Add to Cart</button>
+							{{else}}
+								<form action="/users/mua_hang/gio_hang" method="post">
+									<input id="iduser" name="iduser" type="text" style="display: none" />
+									<input name="hinh" type="text" value="img/product/{{data.anhSanPham}}" style="display: none" />
+									<input name="ten" type="text" value="{{data.tenSanPham}}" style="display: none" />
+									<input name="gia" type="number" value={{data.giaSanPham}} style="display: none" />
+									<input name="soluong" type="number" style="display: none" />
+									<button class="btn bg-primary btn-primary" type="submit" onclick="
+										this.parentNode.firstElementChild.value = '{{currentUser._id}}';
+										this.parentNode.children[4].value = document.getElementById('sst').value;
+										return true;
+									">
+									Add to Cart</button>
+								</form>
+							{{/ifCond}}
 						</div>
 						<div class="card_area d-flex align-items-center">
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
