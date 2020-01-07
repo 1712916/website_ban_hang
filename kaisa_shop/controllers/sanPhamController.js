@@ -177,11 +177,11 @@ exports.cachPhanLoai = function (req, res, next) {
         }
       }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
     }
-    modelSanPham.find({ "mauSac": keyPhanLoai })
+    modelSanPham.find({ "configuration": { "color": keyPhanLoai } })
       .skip(req.params.current_page * itemPerPage - itemPerPage)
       .limit(itemPerPage)
       .exec(function (err, product) {
-        modelSanPham.find({ "mauSac": keyPhanLoai })
+        modelSanPham.find({ "configuration": { "color": keyPhanLoai } })
           .count().exec(function (err, count) {
             if (err) {
               console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");

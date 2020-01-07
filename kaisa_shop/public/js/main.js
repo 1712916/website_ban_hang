@@ -132,7 +132,7 @@ function getCurrentPage(currentURL) {
   return currentPage;
 }
 
-function loadGioHang(){
+function loadGioHang() {
   var gioHang = sessionStorage.getItem('gioHang');
   if (gioHang == null)
     return;
@@ -141,8 +141,8 @@ function loadGioHang(){
   var listGioHangHTML = "";
   for (row of listGioHang) {
     var item = row.split("|");
-    listGioHangHTML = listGioHangHTML + 
-    `
+    listGioHangHTML = listGioHangHTML +
+      `
     <tr>
       <td>
           <div class='media'>
@@ -165,6 +165,9 @@ function loadGioHang(){
       <td>
           <h5 class="total">VND ` + (parseInt(item[2]) * parseInt(item[3])).toString() + `</h5>
       </td>
+      <td>
+        <button onclick="xoaGioHang($(this)); "><i class="fa fa-trash" aria-hidden="true"></i></button>
+      </td>
 </tr>
     `;
   }
@@ -177,22 +180,45 @@ function updateCart() {
   var price = [];
   var quantity = [];
   var total = [];
-  $(".price").each(function(){
+  $(".price").each(function () {
     var priceText = $(this).text();
     price.push(parseInt(priceText.substring(4)));
   });
-  $("input[name='qty']").each(function(){
+  $("input[name='qty']").each(function () {
     quantity.push($(this).val());
   });
-  $(".total").each(function(index) {
+  $(".total").each(function (index) {
     var totalOneItem = price[index] * quantity[index];
     $(this).text("VND " + totalOneItem);
     total.push(totalOneItem);
   });
   var sumPriceOfAllItem = 0;
-    for (item of total) {
-        sumPriceOfAllItem = sumPriceOfAllItem + item;
-    }
+  for (item of total) {
+    sumPriceOfAllItem = sumPriceOfAllItem + item;
+  }
   $(".total-price").text("VND " + sumPriceOfAllItem);
 }
 
+function xoaGioHang(currentElement) {
+  var td = currentElement.parent();
+  var tr = td.parent();
+  var idx = tr.index();
+  var gioHang = sessionStorage.getItem('gioHang');
+  var listGioHang = gioHang.split("\n");
+  var newGioHang = "";
+  for (var i = 0; i < listGioHang.length; i++) {
+    if (i != idx) {
+      newGioHang = newGioHang + listGioHang[i] + "\n";
+    }
+  }
+  newGioHang = newGioHang.substring(0, newGioHang.length - 1);
+  if (newGioHang == "") {
+    sessionStorage.removeItem('gioHang');
+    sessionStorage.removeItem('soLuongGioHang');
+  }
+  else {
+    sessionStorage.setItem('gioHang', newGioHang);
+    sessionStorage.setItem('soLuongGioHang', (listGioHang.length - 1).toString());
+  }
+  window.location.assign('/users/mua_hang/gio_hang');
+}

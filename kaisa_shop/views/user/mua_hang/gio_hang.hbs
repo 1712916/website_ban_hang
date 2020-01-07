@@ -78,6 +78,17 @@
                                 <td>
                                     <h5 class="total"></h5>
                                 </td>
+
+                                <td>
+                                    <form action="/users/mua_hang/gio_hang" method="post">
+                                        <input name="iddeletedcart" type="text" style="display: none" />
+                                        <button type="submit" onclick="
+                                            this.parentNode.firstElementChild.value = '{{_id}}';
+                                            return true;
+                                        "><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    </form>
+                                </td>
+                                
                             </tr>
                             {{/each}}
                             {{/ifCond}}

@@ -1,4 +1,5 @@
 const modelGioHang = require('../models/gioHang');
+const objectId = require('mongodb').ObjectID;
 
 exports.gioHang = function (req, res, next) {
     if (req.isAuthenticated()) {
@@ -24,29 +25,38 @@ exports.gioHang = function (req, res, next) {
 }
 
 // sleep time expects milliseconds
-function sleep (time) {
+function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
-  }
+}
 
 exports.themGioHang = function (req, res, next) {
-    modelGioHang.collection.insertOne({
-        idUser: req.body.iduser,
-        hinh: req.body.hinh,
-        ten: req.body.ten,
-        gia: req.body.gia,
-        soLuong: req.body.soluong
+    //router.post do xóa giỏ hàng
+    if (req.body.iddeletedcart != undefined) {
+        modelGioHang.collection.findOneAndDelete({
+            _id: objectId(req.body.iddeletedcart)
+        });
+    }
+    //router.post do thêm giỏ hàng
+    else {
+        modelGioHang.collection.insertOne({
+            idUser: req.body.iduser,
+            hinh: req.body.hinh,
+            ten: req.body.ten,
+            gia: req.body.gia,
+            soLuong: req.body.soluong
+        });
+    }
+    sleep(2000).then(() => {
+        modelGioHang.find({ "idUser": req.user._id }).exec(function (err, cart) {
+            if (err) {
+                console.log("Thông báo: Không kết nối được với chi tiết giỏ hàng!\n");
+            } else {
+                res.render('./user/mua_hang/gio_hang', {
+                    title: 'Giỏ Hàng',
+                    cartData: cart,
+                    currentUser: req.user
+                });
+            }
+        });
     });
-sleep(2000).then(() => {
-    modelGioHang.find({ "idUser": req.user._id }).exec(function (err, cart) {
-        if (err) {
-            console.log("Thông báo: Không kết nối được với chi tiết giỏ hàng!\n");
-        } else {
-            res.render('./user/mua_hang/gio_hang', {
-                title: 'Giỏ Hàng',
-                cartData: cart,
-                currentUser: req.user
-            });
-        }
-    });
-});
 }
