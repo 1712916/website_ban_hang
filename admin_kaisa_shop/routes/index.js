@@ -7,7 +7,12 @@ const multer = require('multer');
 const Order=require('../models/order');
 const User=require('../models/user');
 
-
+const indexController=require('../controller/index');
+const accountController=require('../controller/account');
+const adminController=require('../controller/admin');
+const orderController=require('../controller/order');
+const productController=require('../controller/product');
+const userController=require('../controller/user');
 
 router.get('/phanquyen', function (req, res, next) {
   if (req.user == null) {
@@ -22,674 +27,66 @@ router.get('/phanquyen', function (req, res, next) {
 });
 
 
-router.get('/', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
+ router.get('/',indexController.index); 
 
-  res.render('index', { title: 'kaisa Shop', headProfile: req.user });
-});
-
-router.get('/dang_ky', function (req, res, next) {
-  if (req.isAuthenticated()) {
-    res.redirect('/');
-  }
-  res.render('./tai_khoan/dang_ky', { title: 'Đăng ký', layout: false, message: req.flash('message') });
-});
-
-router.post('/dang_ky', Passport.authenticate('local.signup', {
-  successRedirect: '/dang_nhap',
-  failureRedirect: '/dang_ky',
+ //Tài khoản
+router.get('/signup',accountController.signUp );
+router.post('/signup', Passport.authenticate('local.signup', {
+  successRedirect: '/signin',
+  failureRedirect: '/signup',
   failureFlash: true
-
 }));
-
-
-router.get('/dang_nhap', function (req, res, next) {
-  if (req.isAuthenticated()) {
-    res.redirect('/');
-  }
-  res.render('./tai_khoan/dang_nhap', { title: 'Đăng nhập', layout: false, message: req.flash('message'), email: req.flash('email') });
-});
-router.post('/dang_nhap', Passport.authenticate('local.signin', {
+router.get('/signin',accountController.signIn);
+router.post('/signin', Passport.authenticate('local.signin', {
   successRedirect: '/',
-  failureRedirect: '/dang_nhap',
+  failureRedirect: '/signin',
   failureFlash: true
-
-
 }));
+router.get('/recovery',accountController.recovery); 
+router.get('/signout', accountController.signOut);
+router.get('/profile', indexController.profile);
+
+//Admin
+router.get('/listAdmin',adminController.listAdmin); 
+router.get('/listAdmin/:page',adminController.pageAdmin);
+router.get('/listAdmin/profile/:_id',adminController.profileAdmin);
+router.post('/updateProfileAdmin/:_id',adminController.updateProfile);
+router.post('/upload_avatar_admin/:_id', adminController.updateAvatar);
+router.post('/update_permission/:_id',adminController.updatePermission);
 
 
-
-router.get('/quen_mat_khau', function (req, res, next) {
-  if (req.isAuthenticated()) {
-    res.redirect('/');
-  }
-  res.render('./tai_khoan/quen_mat_khau', { title: 'Quên mật khẩu', layout: false });
-});
-
-
-
-
-
-
-
-
-router.get('/signout', function (req, res) {
-  req.logout();
-  res.redirect('/');
-});
-
-
-
-
-router.get('/ds_thanh_vien', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-  res.redirect('/ds_thanh_vien/1');
-});
-
-router.get('/ds_thanh_vien/:page', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-  var perPage = 4;
-  var page = req.params.page || 1;
-
-  // const search={
-  //   tenSanPham:"Dell",
-  //   giaSanPham:999000
-  // };
-
-
-  var skip = (page - 1) * perPage;
-
-  Admin.find({}).skip(skip).limit(perPage).exec((err, data) => {
-    if (!err) {
-      Admin.count().exec((err, count) => {
-        if (!err) {
-          res.render('./thanh_vien/danh_sach_thanh_vien', {
-            title: 'Danh sách thành viên',
-            listAdmin: data,
-            current: page,
-            total: Math.ceil(count / perPage),
-            link:'/ds_thanh_vien',
-            headProfile: req.user
-          });
-        }
-      })
-    }
-
-
-
-  })
-
-
-});
-
-
-router.get('/ds_don_hang', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-  Order.find().exec((err,data)=>{
-    if(err){
-      res.redirect('/');
-    }
-    res.render('./don_hang/danh_sach_don_hang', { title: 'Danh sách đơn hàng',listOrder:data, headProfile: req.user });
-  })
-
- 
-});
-
-
-
-
-
-router.get('/profile', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-
-  res.render('./thanh_vien/ds_thanh_vien/thanh_vien_1', { title: 'KaisaAdmin', profile: req.user, headProfile: req.user });
-});
-router.get('/ds_thanh_vien/thanh_vien_1', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-
-  res.render('./thanh_vien/ds_thanh_vien/thanh_vien_1', { title: 'KaisaAdmin', profile: req.user, headProfile: req.user });
-});
-
-router.get('/ds_thanh_vien/thanh_vien_1/:_id', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-  var id = req.params._id;
-  Admin.findOne({ _id: id }).exec((err, data) => {
-    if (err) {
-      res.redirect('/');
-    }
-
-    // const profileAdmin={
-    //   email:data.email,
-    //   name:data.name,
-    //   phone:data.phone,
-    //   birthday: data.birthday,
-    //   address:data.address,
-    //   company: data.company
-    // }
-    // console.log(profileAdmin);
-    res.render('./thanh_vien/ds_thanh_vien/thanh_vien_1', { title: 'KaisaAdmin', profile: data, headProfile: req.user });
-
-  })
-
-
-});
-
-
-router.post('/update_profile/:_id', function (req, res, next) {
-
-
-  const update = {
-    name: req.body.name,
-    phone: req.body.phone,
-    birthday: req.body.birthday,
-    address: req.body.address,
-    company: req.body.company
-  };
-
-
-  const id = req.params._id;
-
-  Admin.findByIdAndUpdate(id, update, function (err, res) {
-    if (err) {
-      res.send("Thay đổi không thành công!");
-      res.redirect('/');
-    }
-    console.log(res);
-  })
-
-
-  if (id == req.user._id) {
-    res.redirect('/profile');
-  }
-  res.redirect('/ds_thanh_vien/thanh_vien_1/' + id);
-
-})
-
+//Sản phẩm
 router.get('/top_san_pham', function (req, res, next) {
   if (!req.isAuthenticated()) {
     res.redirect('/dang_nhap');
   }
   res.render('./san_pham/top_san_pham', { title: 'Express', headProfile: req.user });
 });
-router.get('/ds_san_pham', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
+router.get('/listProduct', productController.listProduct);
+router.get('/listProduct/:page',productController.pageProduct); 
+router.post('/addProduct',productController.addProduct);
+router.get('/product/:_id',productController.detailProduct);
+router.post('/updateProduct/:_id',productController.updateProduct);
+router.post('/upload_avatar_product/:_id', productController.uploadAvatar);
+router.post('/delete_product/:_id',productController.deleteProduct);
 
-  res.redirect('/ds_san_pham/1');
 
 
-});
+//Khách hàng
+//thiếu phân trang
 
-router.get('/ds_san_pham/:page', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-  var perPage = 4;
-  var page = req.params.page || 1;
+router.get('/listUser', userController.listUser);
 
-  // const search={
-  //   tenSanPham:"Dell",
-  //   giaSanPham:999000
-  // };
-
-
-  var skip = (page ) * perPage;
-  
-  // skip = (page - 1) * perPage;
-  Products.count().exec((err, count) => {
-    if(!err){
-      var skip = (page ) * perPage;
-      if(skip<count){
-        skip=count-skip
-      }else{
-        skip=0;
-      }
-      Products.find({}).skip(skip).limit(perPage).exec((err, data) => {
-        if (!err) {
-          res.render('./san_pham/tat_ca_san_pham', {
-            title: 'Danh sách tsản phẩm',
-            listProduct: data.reverse(),
-            current: page,
-            total: Math.ceil(count / perPage),
-            link:'/ds_san_pham',
-            headProfile: req.user
-          });
-        }
-      })
-    }
-    
-  });
-
-  // Products.find({}).skip(skip).limit(perPage).exec((err, data) => {
-  //   if (!err) {
-  //     Products.count().exec((err, count) => {
-  //       if (!err) {
-  //         res.render('./san_pham/tat_ca_san_pham', {
-  //           title: 'Danh sách tsản phẩm',
-  //           listProduct: data,
-  //           current: page,
-  //           total: Math.ceil(count / perPage),
-  //           link:'/ds_san_pham',
-  //           headProfile: req.user
-  //         });
-  //       }
-  //     })
-  //   }
-  //})
-
-
-});
-
-
-router.post('/add_product',function(req,res,next){
-
-  var newProduct = new Products();
- 
-    
-      newProduct.tenSanPham=req.body.tenSanPham;
-      newProduct.loaiSanPham=req.body.loaiSanPham;
-      newProduct.giaSanPham=req.body.giaSanPham;
-      newProduct.nhaSanXuat=req.body.nhaSanXuat;
-      newProduct.moTaSanPham=req.body.moTaSanPham;
-      newProduct.soLuongSanPham=req.body.soLuongSanPham;
-      newProduct.configuration.cpu=req.body.cpu;
-      newProduct.configuration.hardDisk=req.body.hardDisk;
-      newProduct.configuration.ram=req.body.ram;
-      newProduct.configuration.screen=req.body.screen;
-      newProduct.configuration.graphic= req.body.graphic;
-      newProduct.configuration.os=req.body.os;
-      newProduct.configuration.olor=req.body.color;
-      newProduct.nguoiDang=req.user._id;
-
-      console.log(newProduct);
-
-  //   newProduct.save(function(err){
-  //     if (err){
-  //      return res.send("Lỗi rồi~");
-  //     }
-  //     res.redirect('/ds_san_pham');
-  //  })
-   newProduct.save();
-   res.redirect('/ds_san_pham');
-  console.log("Ngon");
-
-  
-
-});
-
-
-// router.get('/:page', function(req, res, next) {
-//   var perPage = 2
-//   var page = req.params.page || 1;
-
-//   const search={
-//     tenSanPham:"Dell",
-//     giaSanPham:999000
-//   };
-
-
-//   var skip=(page-1)*perPage;
-
-//   Admin.find({}).skip(skip).limit(perPage).exec((err,data)=>{
-//     if(!err){
-//         Admin.count().exec((err,count)=>{
-//           if(!err){
-//             res.render('index', { title: 'Express',
-//                                 content:data,
-//                                 current: page,
-//                                 total: Math.ceil(count/perPage)});
-//           }
-//         })
-//     }
-
-
-
-//   })
-
-
-// });
-
-const imageFilter = function (req, file, cb) {
-  // Accept images only
-  if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
-    req.fileValidationError = 'Only image files are allowed!';
-    return cb(new Error('Only image files are allowed!'), false);
-  }
-  cb(null, true);
-};
-
-router.post('/upload_avatar_admin/:_id', function (req, res, next) {
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
-  //console.log("Tên file:"+req.body.file.path);
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-  const id = req.params._id;
-  const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './public/avatars/');
-    },
-    filename: function (req, file, cb) {
-      cb(null, id + '.jpg');
-    }
-  });
-  let upload = multer({ storage: storage, fileFilter: imageFilter }).single('file');
-
-  upload(req, res, function (err) {
-    // req.file contains information of uploaded file
-    // req.body contains information of text fields, if there were any
-
-    if (req.fileValidationError) {
-      //return res.render('index', { message: req.fileValidationError });
-      if (id == req.user._id) {
-        return res.redirect('/profile');
-      }
-      return res.redirect('/ds_thanh_vien/thanh_vien_1/' + id);
-
-    }
-    else if (!req.file) {
-      //return res.render('index', { message: 'Please select an image to upload' });
-      if (id == req.user._id) {
-        return res.redirect('/profile');
-      }
-      return res.redirect('/ds_thanh_vien/thanh_vien_1/' + id);
-
-    }
-    else if (err instanceof multer.MulterError) {
-      //return res.render('index', { message: err });
-      if (id == req.user._id) {
-        return res.redirect('/profile');
-      }
-      return res.redirect('/ds_thanh_vien/thanh_vien_1/' + id);
-    }
-    else if (err) {
-      // return res.render('index', { message: err });
-      if (id == req.user._id) {
-        return res.redirect('/profile');
-      }
-      return res.redirect('/ds_thanh_vien/thanh_vien_1/' + id);
-
-    }
-
-
-
-
-    const update = { avatar: id + '.jpg' };
-    console.log("Toi day ngon nek: " + id);
-    Admin.findByIdAndUpdate(id, update, function (err, res) {
-      if (err) {
-        //res.send("Thay đổi không thành công!");
-        return res.redirect('/');
-      }
-
-    })
-
-    if (id == req.user._id) {
-      return res.redirect('/profile');
-    }
-    return res.redirect('/ds_thanh_vien/thanh_vien_1/' + id);
-
-
-  });
-});
-
-
-router.post('/update_permission/:_id', function (req, res, next) {
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-
-  const id = req.params._id;
-
-  if(id==req.user._id){
-    return res.redirect('/');
-  }
-  if(req.user.permission!="999"){
-    return res.redirect('/');
-  }
-  Admin.findById(id).exec((err, data) => {
-    if (!err) {
-      //0 là mới tạo ních cần xin phép, -1 là đang khóa, 1 là đang mở
-      if (data.permission == "0" || data.permission == "-1") {
-        {
-          Admin.findByIdAndUpdate(id, { permission: "1" }, function (err, res) {
-            if (err) {
-              //res.send("Thay đổi không thành công!");
-              return res.redirect('/');
-            }
-
-          })
-          res.redirect('/ds_thanh_vien');
-        }
-      } else {
-        Admin.findByIdAndUpdate(id, { permission: "-1" }, function (err, res) {
-          if (err) {
-            //res.send("Thay đổi không thành công!");
-            return res.redirect('/');
-          }
-
-        })
-        res.redirect('/ds_thanh_vien');
-      }
-    }
-  })
-
-})
-
-
-
-router.get('/chi_tiet_san_pham/:_id', function(req, res,next){
-
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-
-  const id = req.params._id;
-
-
-  Products.findById(id).exec(function(err,data){
-    if(err){
-      res.redirect('/');
-    }
-
-    res.render('./san_pham/chi_tiet_san_pham', { title: 'Chi tiết sản phẩm',product:data, headProfile: req.user });
-  })
-
-  
-
-});
-
-router.post('/update_product/:_id',function(req,res,next){
-    if (!req.isAuthenticated()) {
-      res.redirect('/dang_nhap');
-    }
-
-    const id = req.params._id;
-
-
-    const update = {
-      tenSanPham:req.body.tenSanPham,
-      loaiSanPham:req.body.loaiSanPham,
-      giaSanPham:req.body.giaSanPham,
-      nhaSanXuat:req.body.nhaSanXuat,
-      moTaSanPham:req.body.moTaSanPham,
-      soLuongSanPham:req.body.soLuongSanPham,
-     configuration:{
-                cpu:req.body.cpu,
-                hardDisk:req.body.hardDisk,
-                ram:req.body.ram,
-                screen:req.body.screen,
-                graphic: req.body.graphic,
-                os:req.body.os,
-                color:req.body.color
-    }
-    };
-
-    Products.findByIdAndUpdate(id,update, function (err, res) {
-      if (err) {
-        res.send("Thay đổi không thành công!");
-        res.redirect('/');
-      }
-      console.log(res);
-    })
-
-    res.redirect('/chi_tiet_san_pham/'+id);
-    
-
-});
-
-
-
-router.post('/upload_avatar_product/:_id', function (req, res, next) {
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
-  //console.log("Tên file:"+req.body.file.path);
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-  const id = req.params._id;
-  const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './public/productsAvatar/');
-    },
-    filename: function (req, file, cb) {
-      cb(null, id + '.jpg');
-    }
-  });
-  let upload = multer({ storage: storage, fileFilter: imageFilter }).single('file');
-
-  upload(req, res, function (err) {
-    // req.file contains information of uploaded file
-    // req.body contains information of text fields, if there were any
-
-    if (req.fileValidationError) {
-      //return res.render('index', { message: req.fileValidationError });
-   
-      return res.redirect('/chi_tiet_san_pham/' + id);
-
-    }
-    else if (!req.file) {
-      //return res.render('index', { message: 'Please select an image to upload' });
-     
-      return res.redirect('/chi_tiet_san_pham/' + id);
-
-    }
-    else if (err instanceof multer.MulterError) {
-      //return res.render('index', { message: err });
-   
-      return res.redirect('/chi_tiet_san_pham/' + id);
-    }
-    else if (err) {
-      // return res.render('index', { message: err });
-      
-      return res.redirect('/chi_tiet_san_pham/' + id);
-
-    }
-
-
-
-
-    const update = { anhSanPham1: id + '.jpg',
-                     anhSanPham: 'http://localhost:9999/image/'+id + '.jpg' };
-    console.log("Toi day ngon nek: " + id);
-    Products.findByIdAndUpdate(id, update, function (err, res) {
-      if (err) {
-        //res.send("Thay đổi không thành công!");
-        return res.redirect('/');
-      }
-
-    })
-
-    return res.redirect('/chi_tiet_san_pham/' + id);
-
-
-  });
-});
-
-router.post('/delete_product/:_id',function(req,res,next){
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-
-  const id = req.params._id;
-
-
-
-  Products.findByIdAndDelete(id, function (err, res) {
-    if (err) {
-      res.send("Thay đổi không thành công!");
-      res.redirect('/');
-    }
-    console.log(res);
-  })
-
-  res.redirect('/ds_san_pham');
-  
-
-});
-
-
-router.get('/ds_khach_hang', function(req, res,next){
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-  User.find().exec((err,data)=>{
-    if(err){
-      res.redirect('/');
-    }
-    res.render('./thanh_vien/danh_sach_khach_hang', { title: 'Danh sách khách hàng',listUser:data, headProfile: req.user });
-
-  })
- 
-});
-
-router.get('/ds_khach_hang/profile/:_id', function(req, res,next){
-  if (!req.isAuthenticated()) {
-    res.redirect('/dang_nhap');
-  }
-  const id=req.params._id;
-  User.findById(id).exec((err,data)=>{
-    if(err){
-      res.redirect('/');
-    }
-    res.render('./thanh_vien/ds_thanh_vien/khach_hang', { title: 'Danh sách khách hàng',profile:data, headProfile: req.user });
-
-  })
- 
-});
+router.get('/listUser/profile/:_id', userController.profileUser);
 
 
 
 
 // Đơn hàng
-router.post('/update_status_card/:_id',function(req,res,next){
-    var id=req.params._id;
-    const update={
-      tinhTrang:req.body.cardStatus
-    }
-    Order.findByIdAndUpdate(id,update).exec((err,res)=>{
-      if(err){
-        res.redirect('/');
-      }
-    })
-    res.redirect('/ds_don_hang');
+//thiếu phân trang
+router.get('/listOrder', orderController.listOrder);
 
-});
+
+router.post('/update_status_order/:_id',orderController.updateStatus);
 
 module.exports = router;

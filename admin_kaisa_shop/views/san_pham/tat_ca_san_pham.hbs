@@ -40,7 +40,7 @@
                                                 <td>{{tenSanPham}}</td>
                                                 <td >{{giaSanPham}}</td>
                                                 <td>{{soLuongSanPham}}</td>
-                                                <td><a href="/chi_tiet_san_pham/{{_id}}"><button class="btn btn-success">Xêm thêm</button></a></td>
+                                                <td><a href="/product/{{_id}}"><button class="btn btn-success">Xêm thêm</button></a></td>
                                                 <td><form action="/delete_product/{{_id}}" method="POST"><button type="submit" class="btn btn-danger">Xóa</button></a></form></td>
                                             </tr>
                                         {{/each}}
@@ -68,7 +68,7 @@
 <div class="modal fade" id="addProduct">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
-                <form action="/add_product" method="POST">
+                <form action="/addProduct" method="POST">
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Tùy chỉnh thông tin sản phẩm</h4>
