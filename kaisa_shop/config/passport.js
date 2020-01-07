@@ -69,7 +69,7 @@ passport.use('local-signup', new LocalStrategy({
           from: 'fungviet@gmail.com',
           to: email,
           subject: 'Veryfy',
-          text: 'Click to this link for veryfy: ' +  `http://localhost:9999/comfirmation/${verification_token}`,
+          text: 'Click to this link for veryfy: ' + `http://localhost:9999/comfirmation/${verification_token}`,
         };
 
         transporter.sendMail(mailOptions, function (error, info) {

@@ -156,6 +156,34 @@ router.post('/tai_khoan/new_password', function (req, res, next) {
     res.redirect('/users/tai_khoan/dang_nhap');
   });
 })
+
+router.get('/tai_khoan/change_password', function (req, res, next) {
+  if (req.isAuthenticated())
+    res.render('./user/tai_khoan/change_password', {});
+})
+router.post('/tai_khoan/change_password', function (req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log(req.user.local.email);
+    User.findOne({ 'local.email': req.user.local.email }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        console.log('111111111');
+        return done(null, false, { message: 'Not user found' })
+      }
+      if (!user.validPassword(req.body.oldpassword)) {
+        console.log('2222222222');
+        return done(null, false, { message: 'Wrong password' })
+      }
+      User.updateOne({ "local.email": req.user.local.email  }, { $set: { "local.password": user.encryptPassword(req.body.newpassword) } }, function (err, result) {
+        if (err) {
+          console.log(err);
+        }
+        console.log(result);
+      });
+      res.redirect('/');
+    })
+  }
+})
 //################################################################
 
 
