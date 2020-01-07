@@ -1,7 +1,6 @@
 const mongoose =require('mongoose');
-const bcrypt=require('bcrypt-nodejs');
 
-var userSchema = new Schema({
+var userSchema = new mongoose.Schema({
     local: {
         email: String,
         password: String,
@@ -12,7 +11,8 @@ var userSchema = new Schema({
             avartar: String,
             fullname: String,
             address: String,
-            phone: String
+            phone: String,
+            birthday:String
         }
     },
     facebook: {
@@ -20,7 +20,8 @@ var userSchema = new Schema({
         token: String,
         email: String,
         name: String
-    }
+    },
+    lock:{type:Boolean}
 });
 
 module.exports=mongoose.model('user',userSchema);

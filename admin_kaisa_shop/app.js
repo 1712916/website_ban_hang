@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var imageRouter = require('./routes/image');
 const hbs = require('hbs');
 const bodyParser=require('body-parser');
 const Passport=require('passport');
@@ -52,8 +53,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
+app.use('/users', usersRouter);imageRouter
+app.use('/image', imageRouter);
 
 
 

@@ -11,168 +11,43 @@
                         <div class="card-body">
                             <div class="mx-auto d-block">
                                 <img class="rounded-circle mx-auto d-block" data-toggle="modal"
-                                    data-target="#changeAvatar" src="avatars/{{profile.avatar}}" alt="Avatar"
+                                    data-target="#changeAvatar" src="avatars/{{profile.local.info.avatar}}" alt="Avatar"
                                     style="width:200px;height:200px;">
-                                <h5 class="text-sm-center mt-2 mb-1">{{profile.name}}</h5>
+                                <h5 class="text-sm-center mt-2 mb-1">{{profile.local.info.fullname}}</h5>
                                 <div class="location text-sm-center">
                                     <i class="fa fa-map-marker"></i>
-                                    {{profile.address}}
+                                    {{profile.local.info.address}}
                                 </div>
                                 <div class="location text-sm-center">
                                     <i class="fas fa-mobile-alt"></i>
-                                    {{profile.phone}}
+                                    {{profile.local.info.phone}}
                                 </div>
 
                                 <div class="location text-sm-center">
                                     <i class="fas fa-birthday-cake"> </i>
-                                    {{profile.birthday}}
-                                </div>
-                                <div class="location text-sm-center">
-                                    <i class="fas fa-at"></i>
-                                    {{profile.company}}
+                                    aaaaaaaaaaa
                                 </div>
 
 
                             </div>
-                            <hr>
-                            <div class="card-text text-sm-center">
 
-
-                                {{!-- <i class="fa fa-facebook pr-1" ></i> --}}
-                                <i class="fas fa-edit" data-toggle="modal" data-target="#editProfile"
-                                    style="font-size:36px"></i>
-
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title mb-3">Danh sách đơn hàng</strong>
                             </div>
+                            <div class="row card-body">
+
+                                <div class="row">
+                                    <div class="col-md-4">Mô tả:</div>
+                                    <div class="col-md-8">{{product.moTaSanPham}}</div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
-
-
-
-
             </div>
-        </div>
-    </div>
-</div>
-<!-- The Modal -->
-<div class="modal fade" id="editProfile">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Tùy chỉnh thông tin tài khoản</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="/update_profile/{{profile._id}}" method="POST">
-                    <div class="row form-group">
-                        <div class="col-12 col-md-3">
-                            <label class="text-info" for="name">Họ tên</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" class="form-control" id="name" name="name" value="{{profile.name}}">
-                        </div>
-
-
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-12 col-md-3">
-                            <label class="text-info" for="birthday">Ngày sinh</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" class="form-control" id="birthday" name="birthday"
-                                value="{{profile.birthday}}">
-                        </div>
-
-
-
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-12 col-md-3">
-                            <label class="text-info" for="phone">Số điện thoại</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" class="form-control" id="phone" name="phone" value="{{profile.phone}}">
-                        </div>
-
-
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-12 col-md-3">
-                            <label class="text-info" for="address">Địa chỉ</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" class="form-control" id="address" name="address"
-                                value="{{profile.address}}">
-                        </div>
-
-
-
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label class="text-info" for="company">Tên cửa hàng</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" class="form-control" id="company" name="company"
-                                value="{{profile.company}}">
-                        </div>
-
-
-
-                    </div>
-
-
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
-                        <button type="submit" class="btn btn-success">Lưu</button>
-                    </div>
-                </form>
-
-            </div>
-
-
-        </div>
-    </div>
-</div>
-
-<!-- Upload Anh-->
-<!-- The Modal -->
-<div class="modal fade" id="changeAvatar">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Thay Avatar</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="/upload_avatar_admin/{{profile._id}}" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <input type="file" id="file" name="file"> </br>
-                    </div>
-
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
-                        <button type="submit" class="btn btn-success">Lưu</button>
-                    </div>
-                </form>
-
-            </div>
-
-
         </div>
     </div>
 </div>

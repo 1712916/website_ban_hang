@@ -1,14 +1,15 @@
 const mongoose=require('mongoose');
 
 const product=new mongoose.Schema({
-    _id:{type:mongoose.Schema.Types.ObjectId},
-    tenSanPham:{type: String, required:true},
-    loaiSanPham:{type: String, required:true},
-    giaSanPham:{type: Number, required:true},
-    anhSanPham:{type: [String], required:true},
-    nhaSanXuat:{type: [String], required:true},
-    moTaSanPham:{type: String, required:true},
-    soLuongSanPham:{type:Number,required:true},
+    
+    tenSanPham:{type: String, required:false},
+    loaiSanPham:{type: String, required:false},
+    giaSanPham:{type: Number, required:false},
+    anhSanPham:{type: String, required:false},
+    anhSanPham1:{type: String, required:false},
+    nhaSanXuat:{type: String, required:false},
+    moTaSanPham:{type: String, required:false},
+    soLuongSanPham:{type:Number,required:false},
     configuration:{
                 cpu:{type: String, required:false},
                 hardDisk:{type: String, required:false},
