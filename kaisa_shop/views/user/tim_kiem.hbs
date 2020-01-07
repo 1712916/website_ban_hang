@@ -1,15 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  
+
   {{> elements/head_tag}}
 </head>
+
 <body>
 
-   <h1>Chúc bạn tìm kiếm zui zẻ =))</h1>
+  <div class="mt-3 ml-5">
+    <form name="jksearch" action="http://www.google.com/search" method="get" onSubmit="jksitesearch(this)">
+
+      <input id="hiddenquery" type="hidden" name="q" />
+      <input name="qfront" type="text" style="width: 200px" placeholder="Tìm kiếm từ web bên ngoài" />
+      <input class="btn-primary" type="submit" value="Search" />
+      <br />
+      <div class="mt-3 ml-3" style="font: bold 11px Verdana;">Google:<input name="se" type="radio" checked>
+         Yahoo:<input name="se" type="radio">  MSN:<input name="se" type="radio">
+      </div>
+
+      <script type="text/javascript">
+
+        // All-in-one Internal Site Search script- By JavaScriptKit.com (http://www.javascriptkit.com)
+        // For this and over 400+ free scripts, visit JavaScript Kit- http://www.javascriptkit.com/
+        // This notice must stay intact for use
+
+        //Enter domain of site to search.
+        //var domainroot="www.javascriptkit.com"
+
+        var searchaction = [ //form action for the 3 search engines
+          "http://www.google.com/search",
+          "http://search.yahoo.com/search",
+          "http://search.msn.com/results.aspx"
+        ]
+
+        var queryfieldname = ["q", "p", "q"] //name of hidden query form for the 3 search engines
+
+        function switchaction(cur, index) {
+          cur.form.action = searchaction[index]
+          document.getElementById("hiddenquery").name = queryfieldname[index]
+        }
+
+        function jksitesearch(curobj) {
+          for (i = 0; i < document.jksearch.se.length; i++) { //loop through radio to see which is checked
+            if (document.jksearch.se[i].checked == true)
+              switchaction(document.jksearch.se[i], i)
+          }
+          document.getElementById("hiddenquery").value = curobj.qfront.value
+        }
+
+      </script>
+
+    </form>
+
+  </div>
+
+  <div class="ml-5">
+    <form class="input-group filter-bar-search" action="/users/tim_kiem/1" method="get">
+      <input type="text" placeholder="Search" id="noiDungSearch" name="noiDungSearch">
+      <div class="input-group-append">
+        <button type="submit"><i class="ti-search"></i></button>
+      </div>
+    </form>
+  </div>
+
+
+  <!-- Start Best Seller -->
+  <section class="d-flex justify-content-center mt-5 lattest-product-area pb-40 category-list">
+    <div class="row">
+      <div class="row">
+        <!--===========Data từ dữ liệu==========-->
+        {{#ifCond currentUser '==' undefined}}
+        {{#each data}}
+        <div class="col-md-6 col-lg-4">
+          <div class="card text-center card-product">
+            <div class="card-product__img">
+              <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
+              <ul class="card-product__imgOverlay">
+                <li><button><i class="ti-search"></i></button></li>
+                <li><button onclick="
+                              var gioHang = sessionStorage.getItem('gioHang');
+                              if (gioHang == null)
+                                sessionStorage.setItem('gioHang', 'img/product/{{anhSanPham}}|{{tenSanPham}}|{{giaSanPham}}|1');
+                              else
+                                sessionStorage.setItem('gioHang', gioHang + '\n' + 'img/product/{{anhSanPham}}|{{tenSanPham}}|{{giaSanPham}}|1');
+                              var soLuongGioHang;
+                              if (sessionStorage.getItem('soLuongGioHang') == null)
+                                soLuongGioHang = 0;
+                              else
+                                soLuongGioHang = parseInt(sessionStorage.getItem('soLuongGioHang'));
+                              soLuongGioHang = soLuongGioHang + 1;
+                              sessionStorage.setItem('soLuongGioHang', soLuongGioHang.toString());
+                              document.getElementById('soLuongGioHang').innerHTML = soLuongGioHang.toString();
+                          "><i class="ti-shopping-cart"></i></button></li>
+                <li><button><i class="ti-heart"></i></button></li>
+              </ul>
+            </div>
+            <div class="card-body">
+              <p>{{loaiSanPham}}</p>
+              <h4 class="card-product__title"><a href="/chi_tiet_sp/{{_id}}/1">{{tenSanPham}}</a></h4>
+              <p class="card-product__price">VND {{giaSanPham}}</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+
+        {{else}}
+        <p id="idCurrentUser" style="display: none">{{currentUser._id}}</p>
+        {{#each data}}
+        <div class="col-md-6 col-lg-4">
+          <div class="card text-center card-product">
+            <div class="card-product__img">
+              <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
+              <ul class="card-product__imgOverlay">
+                <li><button><i class="ti-search"></i></button></li>
+                <li>
+                  <form action="/users/mua_hang/gio_hang" method="post">
+                    <input id="iduser" name="iduser" type="text" style="display: none" />
+                    <input name="hinh" type="text" value="img/product/{{anhSanPham}}" style="display: none" />
+                    <input name="ten" type="text" value="{{tenSanPham}}" style="display: none" />
+                    <input name="gia" type="number" value={{giaSanPham}} style="display: none" />
+                    <input name="soluong" type="number" value=1 style="display: none" />
+                    <button type="submit" onclick="
+                              this.parentNode.firstElementChild.value = document.getElementById('idCurrentUser').innerHTML;
+                              return true;
+                            ">
+                  </form>
+                  <i class="ti-shopping-cart"></i></button>
+                </li>
+
+                <li><button><i class="ti-heart"></i></button></li>
+              </ul>
+            </div>
+            <div class="card-body">
+              <p>{{loaiSanPham}}</p>
+              <h4 class="card-product__title"><a href="/chi_tiet_sp/{{_id}}/1">{{tenSanPham}}</a></h4>
+              <p class="card-product__price">VND {{giaSanPham}}</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        {{/ifCond}}
+
+      </div>
+  </section>
+  <!-- End Best Seller -->
+
+  <div class="d-flex justify-content-center container">
+    <ul class="pagination" id="pagination">
+      {{#ifCond pages '>' 0}}
+      {{#ifCond current '==' 1}}
+      <li class="page-item disabled"><a class="page-link">prev</a></li>
+      {{else}}
+      <li class="page-item"><a class="page-link" href={{concat baseUrl '/' (math current '-' 1)}}>prev</a></li>
+      {{/ifCond}}
+
+      {{#ifCond current '<=' (math (math (math pages '-' 1) '/' 5) '*' 5)}}
+      {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+      {{#ifCond current '==' @index}}
+      <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+      {{else}}
+      <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+      {{/ifCond}}
+      {{/repeat}}
+
+      {{else}}
+      {{#ifCond (math pages '%' 5) '==' 0}}
+      {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+      {{#ifCond current '==' @index}}
+      <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+      {{else}}
+      <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+      {{/ifCond}}
+      {{/repeat}}
+
+      {{else}}
+      {{#repeat count=(math pages '%' 5) start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+      {{#ifCond current '==' @index}}
+      <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+      {{else}}
+      <li class="page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
+      {{/ifCond}}
+      {{/repeat}}
+      {{/ifCond}}
+      {{/ifCond}}
+
+      {{#ifCond current '==' pages}}
+      <li class="page-item disabled"><a class="page-link">next</a></li>
+      {{else}}
+      <li class="page-item"><a class="page-link" href={{concat baseUrl '/' (math current '+' 1)}}>next</a></li>
+      {{/ifCond}}
+      {{/ifCond}}
+    </ul>
+  </div>
+
+  </div>
+  </div>
+  </div>
+  </section>
+
+  <!-- ================ category section end ================= -->
+
 
 
   {{> elements/body_script}}
- 
+
 </body>
+
 </html>

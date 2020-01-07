@@ -127,6 +127,7 @@ exports.cachPhanLoai = function (req, res, next) {
         }
       }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
     }
+
     modelSanPham.find({ "nhaSanXuat": keyPhanLoai })
       .skip(req.params.current_page * itemPerPage - itemPerPage)
       .limit(itemPerPage)
@@ -376,7 +377,7 @@ exports.chiTietSanPham = function (req, res, next) {
 }
 
 exports.updateChiTietSanPham = function (req, res, next) {
-  
+
   modelComment.collection.insertOne({
     idSP: req.params.id,
     username: req.body.name,

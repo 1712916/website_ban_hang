@@ -222,3 +222,18 @@ function xoaGioHang(currentElement) {
   }
   window.location.assign('/users/mua_hang/gio_hang');
 }
+
+function searchKetHop() {
+  var noiDungSearchKetHop = "";
+  noiDungSearchKetHop = noiDungSearchKetHop + $("[name='category']:checked").siblings().eq(0).children().eq(0).text() + "|";
+  noiDungSearchKetHop = noiDungSearchKetHop + $("[name='brand']:checked").siblings().eq(0).children().eq(0).text() + "|";
+  noiDungSearchKetHop = noiDungSearchKetHop + $("[name='color']:checked").siblings().eq(0).children().eq(0).text() + "|";
+  var tmp = $("[name='price']:checked").siblings().eq(0).children().eq(0).text();
+  if (tmp == "Nhỏ hơn 40000")
+    tmp = "0-40000";
+  else if (tmp == "Lớn hơn 100000")
+    tmp = "100000-Infinity";
+  noiDungSearchKetHop = noiDungSearchKetHop + tmp + "|";
+  noiDungSearchKetHop = noiDungSearchKetHop.substring(0, noiDungSearchKetHop.length - 1);
+  return noiDungSearchKetHop;
+}
