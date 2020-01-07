@@ -27,7 +27,7 @@ router.get('/', function (req, res, next) {
       if (req.isAuthenticated()) {
 
         console.log('thacog');
-        res.render('trang_chu', { usr: "Xin chào: " + req.user.local.email });
+        res.render('trang_chu', {isAuthenticated: req.isAuthenticated(),usr: "Xin chào: " + req.user.local.email });
       }
       else {
         console.log('thatbai');

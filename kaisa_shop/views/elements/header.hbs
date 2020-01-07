@@ -60,9 +60,10 @@
             <li class="nav-item"><a href="/users/mua_hang/gio_hang"><button><i class="ti-shopping-cart"></i><span
                     class="nav-shop__circle" id="soLuongGioHang"></span></button> </a></li>
             {{!-- <li class="nav-item"><a class="button button-header" href="/users/san_pham/danh_muc_san_pham">Mua Ngay</a></li> --}}
+            {{#if isAuthenticated}}
              <li class="nav-item"><a class="button button-header" href="/logout">Đăng xuất</a></li>
              <li class="nav-item"><a id="username">{{usr}} </a></li>
-
+{{/if}}
           </ul>
         </div>
       </div>
