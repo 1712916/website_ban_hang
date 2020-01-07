@@ -1,10 +1,17 @@
 <html>
 
 <head>
-    <style >
+    <style>
         body {
             background: #ececec;
         }
+
+        .button {
+            display: block;
+            max-width: 300px;
+            margin: auto;
+        }
+
         h1,
         h2,
         h3,
@@ -14,15 +21,18 @@
             color: #3F51B5;
             padding-bottom: 8px
         }
+
         .container {
             margin: auto;
             width: 350px;
             text-align: center;
         }
+
         .listFlex {
             display: flex;
             justify-content: center;
         }
+
         img {
             width: 100%;
         }
@@ -33,38 +43,33 @@
 <body>
     <div class="container">
         <h3>Personal Profile</h3>
-        <h1>Dan Englishby</h1>
+        <h1>Phung Quoc Viet</h1>
         <a href="https://imgbb.com/"><img src="https://i.ibb.co/pdJfzx9/profile-picture.jpg" alt="profile-picture"
                 border="0" /></a>
         <h4>About Me</h4>
-        <p>Hi, I'm Dan Englishby, I have a huge passion for web-development and programming. I love to learn and thrive
-            from
+        <p>Hi, I'm VIet, I have a huge passion for web-development and programming. I love to learn and thrive from
             challenges.</p>
-        <h4>My Skills</h4>
+        <h4>Infomation</h4>
         <div class="listFlex">
             <div>
                 <ul>
-                    <li>PHP</li>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                </ul>
-            </div>
-            <div>
-                <ul>
-                    <li>JavaScript</li>
-                    <li>JQuery</li>
-                    <li>C#</li>
+                    <li>Email: {{email}}</li>
+                    <li>Fullname: {{fullname}}</li>
+                    <li>Address: {{address}}</li>
+                    <li>Phone: {{phone}}</li>
                 </ul>
             </div>
         </div>
-        <h4>Social Media</h4>
-        Catch me on Twitter - <a href="https://twitter.com/DanEnglishby">@DanEnglishby</a>
-    </div>
+        <div>
+            <button type="submit" value="submit"> <a href="/profile_edit">Thay Đổi Thông Tin</a> </button>
+        </div>
 
-    	{{> elements/footers}}
+        <br></br>
+
+        {{> elements/footers}}
 
 
-	{{> elements/body_script}}
+        {{> elements/body_script}}
 </body>
 
 </html>

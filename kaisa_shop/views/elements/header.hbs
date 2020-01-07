@@ -2,10 +2,10 @@
 <header class="header_area">
   <script type="text/javascript">
     if (sessionStorage.getItem('soLuongGioHang') == null) {
-    document.getElementById('soLuongGioHang').innerHTML = '0';
-    sessionStorage.setItem('soLuongGioHang', '0');
-      }
-  else
+      document.getElementById('soLuongGioHang').innerHTML = '0';
+      sessionStorage.setItem('soLuongGioHang', '0');
+    }
+    else
       document.getElementById('soLuongGioHang').innerHTML = sessionStorage.getItem('soLuongGioHang');
   </script>
   <div class="main_menu">
@@ -25,7 +25,8 @@
               <a href="/users" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                 aria-haspopup="true" aria-expanded="false">Sản Phẩm</a>
               <ul class="dropdown-menu">
-                <li class="nav-item"><a class="nav-link" href="/users/san_pham/danh_muc_san_pham/1">Danh Mục Sản Phẩm</a>
+                <li class="nav-item"><a class="nav-link" href="/users/san_pham/danh_muc_san_pham/1">Danh Mục Sản
+                    Phẩm</a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="/users/san_pham/danh_muc_san_pham/san_pham_1">Chi Tiết
                     Sản Phẩm</a></li>
@@ -53,6 +54,13 @@
               </ul>
             </li>
             <li class="nav-item"><a class="nav-link" href="/users/lien_he">Liên Hệ</a></li>
+
+            {{#if isAuthenticated}}
+            <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+            
+            {{/if}}
+
           </ul>
 
           <ul class="nav-shop">
@@ -61,9 +69,9 @@
                     class="nav-shop__circle" id="soLuongGioHang"></span></button> </a></li>
             {{!-- <li class="nav-item"><a class="button button-header" href="/users/san_pham/danh_muc_san_pham">Mua Ngay</a></li> --}}
             {{#if isAuthenticated}}
-             <li class="nav-item"><a class="button button-header" href="/logout">Đăng xuất</a></li>
-             <li class="nav-item"><a id="username">{{usr}} </a></li>
-{{/if}}
+            <li class="nav-item"><a id="username">{{usr}} </a></li>
+
+            {{/if}}
           </ul>
         </div>
       </div>
@@ -71,6 +79,6 @@
   </div>
   <script href=".../routes/users.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
 </header>
 <!--================ End Header Menu Area =================-->
