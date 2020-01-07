@@ -54,17 +54,17 @@ exports.cachPhanLoai = function (req, res, next) {
   var phanLoai = req.params.phan_loai;
   let keyPhanLoai;
   if (cachPhanLoai == 'phan_loai') {
-    if (phanLoai == 'phu_kien') {
-      keyPhanLoai = "Phụ Kiện";
+    if (phanLoai == 'laptop') {
+      keyPhanLoai = "Laptop";
     }
-    else if (phanLoai == 'my_pham') {
-      keyPhanLoai = "Mỹ Phẩm"
+    else if (phanLoai == 'smartphone') {
+      keyPhanLoai = "Smartphone"
     }
-    else if (phanLoai == 'do_choi') {
-      keyPhanLoai = "Đồ chơi"
+    else if (phanLoai == 'linh_kien') {
+      keyPhanLoai = "Linh kiện"
     }
-    else if (phanLoai == 'trang_tri') {
-      keyPhanLoai = "Trang Trí"
+    else if (phanLoai == 'pc_workstation') {
+      keyPhanLoai = "PC-Workstation"
     }
     else {
       modelSanPham.find({}, function (err, product) {
@@ -104,11 +104,11 @@ exports.cachPhanLoai = function (req, res, next) {
     if (phanLoai == 'apple') {
       keyPhanLoai = "Apple"
     }
-    else if (phanLoai == 'asus') {
-      keyPhanLoai = "Asus"
+    else if (phanLoai == 'lenovo') {
+      keyPhanLoai = "Lenovo"
     }
-    else if (phanLoai == 'gionee') {
-      keyPhanLoai = "Gionee"
+    else if (phanLoai == 'dell') {
+      keyPhanLoai = "Dell"
     }
     else if (phanLoai == 'micromax') {
       keyPhanLoai = "Micromax"
@@ -178,11 +178,11 @@ exports.cachPhanLoai = function (req, res, next) {
         }
       }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
     }
-    modelSanPham.find({ "configuration": { "color": keyPhanLoai } })
+    modelSanPham.find({ "color": keyPhanLoai })
       .skip(req.params.current_page * itemPerPage - itemPerPage)
       .limit(itemPerPage)
       .exec(function (err, product) {
-        modelSanPham.find({ "configuration": { "color": keyPhanLoai } })
+        modelSanPham.find({ "color": keyPhanLoai })
           .count().exec(function (err, count) {
             if (err) {
               console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
