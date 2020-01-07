@@ -1,206 +1,76 @@
-<!-- DATA TABLE-->
-<section class="p-t-20">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="title-5 m-b-35">Danh sách đơn hàng</h3>
-                <div class="table-data__tool">
-                    <div class="table-data__tool-left">
-                        <div class="rs-select2--light rs-select2--md">
-                            <select class="js-select2" name="property">
-                                <option selected="selected">All Properties</option>
-                                <option value="">Option 1</option>
-                                <option value="">Option 2</option>
-                            </select>
-                            <div class="dropDownSelect2"></div>
+<!-- MAIN CONTENT-->
+<div class="main-content">
+    <!-- BREADCRUMB-->
+
+    <!-- END BREADCRUMB-->
+
+    <section>
+        <div class="section__content ">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <!-- USER DATA-->
+                        <div class="user-data m-b-40">
+                            <h3 class="title-3 m-b-30">
+                                <i class="zmdi zmdi-account-calendar"></i>Danh sách đơn hàng</h3>
+                            <div class="filters m-b-45">
+                                <div class="row justify-content-end">
+
+
+                                </div>
+                            </div>
+                            <div class="table">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td>Mã đơn hàng</td>
+                                            <td>Tổng tiền</td>
+                                            <td>Số lượng sản phẩm</td>
+                                            <td>Tình trạng</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      {{#each listOrder}}
+                                        <tr>
+                                            <td></td>
+                                            <td>{{_id}}</td>
+                                            <td>{{tongTien}}</td>
+                                            <td>{{soLuong}}</td>
+                                            <form action="/update_status_card/5e1422a11c9d44000076cc6a" method="POST">
+                                                <td>
+                                                    <div class="form-group">
+                                                        <select  class=" form-control" name="cardStatus">
+                                                            <option {{selectedStatus 'Chờ xử lý' tinhTrang}} >Chờ xử lý</option>
+                                                            <option {{selectedStatus 'Đang giao' tinhTrang}}>Đang giao</option>
+                                                            <option {{selectedStatus 'Đã giao' tinhTrang}}>Đã giao</option>
+                                                            <option {{selectedStatus 'Hủy đơn hàng' tinhTrang}}>Hủy đơn hàng</option>
+                                                        </select>
+
+                                                    </div>
+                                                </td>
+
+                                                <td><button type="submit" class="btn btn-primary">Cập nhật</button> </td>
+                                            <form>
+
+                                        </tr>
+                                      {{/each}} 
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="user-data__footer">
+                                {{>elements/pagination}}
+                                {{!-- <button class="au-btn au-btn-load">Xêm thêm</button> --}}
+                            </div>
                         </div>
-                        <div class="rs-select2--light rs-select2--sm">
-                            <select class="js-select2" name="time">
-                                <option selected="selected">Today</option>
-                                <option value="">3 Days</option>
-                                <option value="">1 Week</option>
-                            </select>
-                            <div class="dropDownSelect2"></div>
-                        </div>
-                        <button class="au-btn-filter">
-                            <i class="zmdi zmdi-filter-list"></i>filters</button>
+                        <!-- END USER DATA-->
                     </div>
-                    <div class="table-data__tool-right">
-                        <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                            <i class="zmdi zmdi-plus"></i>add item</button>
-                        <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                            <select class="js-select2" name="type">
-                                <option selected="selected">Export</option>
-                                <option value="">Option 1</option>
-                                <option value="">Option 2</option>
-                            </select>
-                            <div class="dropDownSelect2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-responsive table-responsive-data2">
-                    <table class="table table-data2">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <label class="au-checkbox">
-                                        <input type="checkbox">
-                                        <span class="au-checkmark"></span>
-                                    </label>
-                                </th>
-                                <th>Tên</th>
-                                <th>email</th>
-                                <th>Mô tả đơn hàng</th>
-                                <th>Thời gian</th>
-                                <th>Tình trạng</th>
-                                <th>Giá</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="tr-shadow">
-                                <td>
-                                    <label class="au-checkbox">
-                                        <input type="checkbox">
-                                        <span class="au-checkmark"></span>
-                                    </label>
-                                </td>
-                                <td>Kiều Phong</td>
-                                <td>
-                                    <span class="block-email">lori@example.com</span>
-                                </td>
-                                <td class="desc">Samsung S8 Black</td>
-                                <td>2018-09-27 02:12</td>
-                                <td>
-                                    <span class="status--process">Đang giao</span>
-                                </td>
-                                <td>$679.00</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                            <i class="zmdi zmdi-mail-send"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                            <i class="zmdi zmdi-more"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="spacer"></tr>
-                            <tr class="tr-shadow">
-                                <td>
-                                    <label class="au-checkbox">
-                                        <input type="checkbox">
-                                        <span class="au-checkmark"></span>
-                                    </label>
-                                </td>
-                                <td>Kiều Phong</td>
-                                <td>
-                                    <span class="block-email">john@example.com</span>
-                                </td>
-                                <td class="desc">iPhone X 64Gb Grey</td>
-                                <td>2018-09-29 05:57</td>
-                                <td>
-                                    <span class="status--process">Đang giao</span>
-                                </td>
-                                <td>$999.00</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                            <i class="zmdi zmdi-mail-send"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                            <i class="zmdi zmdi-more"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="spacer"></tr>
-                            <tr class="tr-shadow">
-                                <td>
-                                    <label class="au-checkbox">
-                                        <input type="checkbox">
-                                        <span class="au-checkmark"></span>
-                                    </label>
-                                </td>
-                                <td>Kiều Phong</td>
-                                <td>
-                                    <span class="block-email">lyn@example.com</span>
-                                </td>
-                                <td class="desc">iPhone X 256Gb Black</td>
-                                <td>2018-09-25 19:03</td>
-                                <td>
-                                    <span class="status--denied">Từ chối</span>
-                                </td>
-                                <td>$1199.00</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                            <i class="zmdi zmdi-mail-send"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                            <i class="zmdi zmdi-more"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="spacer"></tr>
-                            <tr class="tr-shadow">
-                                <td>
-                                    <label class="au-checkbox">
-                                        <input type="checkbox">
-                                        <span class="au-checkmark"></span>
-                                    </label>
-                                </td>
-                                <td>Kiều Phong</td>
-                                <td>
-                                    <span class="block-email">doe@example.com</span>
-                                </td>
-                                <td class="desc">Camera C430W 4k</td>
-                                <td>2018-09-24 19:10</td>
-                                <td>
-                                    <span class="status--process">Đang giao</span>
-                                </td>
-                                <td>$699.00</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                            <i class="zmdi zmdi-mail-send"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                            <i class="zmdi zmdi-more"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>

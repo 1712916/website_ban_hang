@@ -84,3 +84,10 @@ return new Handlebars.SafeString(myString);
 
 
 });
+
+
+Handlebars.registerHelper("selectedStatus",function(currentStatus,status,options){
+  if(status==currentStatus){
+    return new Handlebars.SafeString('selected="selected"');
+  }
+});
