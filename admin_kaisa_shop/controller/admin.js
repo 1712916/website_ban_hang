@@ -76,7 +76,7 @@ exports.updateProfile=function (req, res, next) {
     if (id == req.user._id) {
       res.redirect('/profile');
     }
-    res.redirect('/ds_thanh_vien/thanh_vien_1/' + id);
+    res.redirect('/listAdmin/profile/' + id);
   
   }
 
