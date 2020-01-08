@@ -46,7 +46,7 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
 				<div class="col-lg-6">
 					<div class="owl-carousel owl-theme s_Product_carousel">
 						<div class="single-prd-item">
-							<img class="img-fluid" src="img/product/{{data.anhSanPham}}" alt="">
+							<img class="img-fluid" src="{{data.anhSanPham}}" alt="">
 						</div>
 						<!-- <div class="single-prd-item">
 							<img class="img-fluid" src="img/category/s-p1.jpg" alt="">
@@ -91,10 +91,7 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
 									<input name="gia" type="number" value={{data.giaSanPham}} style="display: none" />
 									<input name="soluong" type="number" style="display: none" />
 									<button class="btn bg-primary btn-primary" type="submit" onclick="
-										if ({{data.soLuongSanPham}} == 0) {
-											alert('{{data.tenSanPham}} không còn đủ số lượng');
-											return false;
-										}
+										
 										this.parentNode.firstElementChild.value = '{{currentUser._id}}';
 										this.parentNode.children[4].value = document.getElementById('sst').value;
 										return true;

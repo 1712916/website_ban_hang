@@ -168,7 +168,7 @@
                   <div class="col-md-6 col-lg-4">
                     <div class="card text-center card-product">
                       <div class="card-product__img">
-                        <img class="card-img" src="img/product/{{anhSanPham}}" alt="">
+                        <img class="card-img" src="{{anhSanPham}}" alt="">
                         <ul class="card-product__imgOverlay">
                           <li><button><i class="ti-search"></i></button></li>
                           <li><button onclick="
@@ -218,10 +218,7 @@
                               <input name="gia" type="number" value={{giaSanPham}} style="display: none" />
                               <input name="soluong" type="number" value=1 style="display: none" />
                               <button type="submit" onclick="
-                              if ({{soLuongSanPham}} == 0) {
-                                alert('{{tenSanPham}} hết hàng');
-                                return false;
-                              }
+                              
                               this.parentNode.firstElementChild.value = document.getElementById('idCurrentUser').innerHTML;
                               return true;
                             ">
