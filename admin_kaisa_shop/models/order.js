@@ -1,25 +1,20 @@
-const mongoose =require('mongoose');
 
-const order=new mongoose.Schema({
-    dsSanPham: [{
-        maSanPham: {type: mongoose.Schema.Types.ObjectId},
-			giaSanPham:Number,
-			soLuong:Number
-    }	
-	],
-	soLuong:Number,
-    tongTien:{type:Number},
-	tinhTrang:String,
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var orderSchema = new Schema({
+    dsSanPham: Array,
+	tongTien: Number,
+	soSanPham:Number,
+	nguoiMua: mongoose.Schema.Types.ObjectId,
+	tenNguoiMua: String,
+    diaChi: String,
+    dienThoai: String,
+	tinhTrang: String,
 	ngayGiao:{
 		ngay:Number,
 		thang:Number,
 		nam:Number
 	}
 	
-	
-	
-
-},{collection:'order'});
-
-
-module.exports=mongoose.model('order',order);
+});
+module.exports = mongoose.model('order', orderSchema);

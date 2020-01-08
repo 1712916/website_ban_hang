@@ -25,7 +25,7 @@
 
                                 <div class="location text-sm-center">
                                     <i class="fas fa-birthday-cake"> </i>
-                                    aaaaaaaaaaa
+                                     {{profile.local.info.birthday}}
                                 </div>
 
 
@@ -38,10 +38,31 @@
                             </div>
                             <div class="row card-body">
 
-                                <div class="row">
-                                    <div class="col-md-4">Mô tả:</div>
-                                    <div class="col-md-8">{{product.moTaSanPham}}</div>
-                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td>Mã đơn hàng</td>
+                                            <td>Giá</td>
+                                            <td>Số lượng</td>
+                                            <td>Tình trạng</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each listOrder}}
+                                        <tr>
+                                            <td></td>
+                                           <td><a href="/listOrder/detail/{{_id}}">{{_id}}</a></td> 
+                                            <td>{{tongTien}}</td>
+                                            <td>{{soSanPham}}</td>
+                                            <td><span class="badge badge-danger">{{tinhTrang}}</span></td>
+                                        </tr>
+                                        {{/each}}
+
+                                    </tbody>
+                                </table>
+
                             </div>
                             
                         </div>

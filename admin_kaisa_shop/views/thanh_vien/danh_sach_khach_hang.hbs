@@ -42,8 +42,7 @@
 
                                             </td>
                                             <td>Tài khoản</td>
-                                            <td>Vai trò</td>
-                                            <td>Tình trạng</td>
+                                            <td></td>
                                             <td>Cấp quyền truy cập</td>
                                         </tr>
                                     </thead>
@@ -62,19 +61,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="role admin">Người bán hàng</span>
+                                               <a href="/listUser/profile/{{_id}}"><button class="btn btn-info">Xêm thêm</button></a>
                                             </td>
                                             <td>
-                                                {{permissionStatusHelper permission}}
-                                               
-                                                
+                                                                                  
+                                                <button class="btn btn-success">Mở</button>
                                             </td>
-                                            <td>
-                                            <form action="/update_permission/{{_id}}" method="POST">
-                                                 {{permissionHelper permission}}
-                                            </form>
-                                           
-                                            </td>
+                                            
                                         </tr>
 
                                         {{/each}}

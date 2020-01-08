@@ -1,11 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Passport = require('passport');
-const Admin = require('../models/admin');
-const Products = require('../models/product');
-const multer = require('multer');
-const Order=require('../models/order');
-const User=require('../models/user');
+
 
 const indexController=require('../controller/index');
 const accountController=require('../controller/account');
@@ -73,10 +69,10 @@ router.post('/delete_product/:_id',productController.deleteProduct);
 
 
 //Khách hàng
-//thiếu phân trang
+//thiếu chi tiết
 
 router.get('/listUser', userController.listUser);
-
+router.get('/listUser/:page', userController.pageUser);
 router.get('/listUser/profile/:_id', userController.profileUser);
 
 
@@ -85,8 +81,8 @@ router.get('/listUser/profile/:_id', userController.profileUser);
 // Đơn hàng
 //thiếu phân trang
 router.get('/listOrder', orderController.listOrder);
-
-
+router.get('/listOrder/:page', orderController.pageOrder);
+router.get('/listOrder/detail/:_id', orderController.detailOrder);
 router.post('/update_status_order/:_id',orderController.updateStatus);
 
 module.exports = router;
