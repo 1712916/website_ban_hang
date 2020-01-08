@@ -1,6 +1,7 @@
 const mongoose =require('mongoose');
 
 var userSchema = new mongoose.Schema({
+    lock:Boolean,
     local: {
         email: String,
         password: String,

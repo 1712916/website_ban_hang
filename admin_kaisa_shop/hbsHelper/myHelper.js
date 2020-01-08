@@ -91,3 +91,15 @@ Handlebars.registerHelper("selectedStatus",function(currentStatus,status,options
     return new Handlebars.SafeString('selected="selected"');
   }
 });
+
+Handlebars.registerHelper("lockHelper",function(lock,options){
+  if(!lock){
+    return new Handlebars.SafeString(' <button type="submit" class="btn btn-success" disabled>Mở</button>'+
+    '<button type="submit" class="btn btn-danger" >khóa</button>');
+  }
+  else{
+    return new Handlebars.SafeString(' <button type="submit" class="btn btn-success" >Mở</button>'+
+    '<button type="submit" class="btn btn-danger" disabled>khóa</button>');
+  }
+});
+

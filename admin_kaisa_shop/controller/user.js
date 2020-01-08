@@ -53,3 +53,20 @@ exports.profileUser=function(req, res,next){
   
     })
 }
+
+
+exports.lockUser=function(req,res,next){
+  const id=req.params._id;
+  User.findById(id).exec((err,data)=>{
+    const update={
+      lock:!data.lock
+    }
+    if(!err){
+      User.findByIdAndUpdate(id,update).exec((err)=>{
+
+      })
+    }
+    res.redirect('/listUser/1');
+  })
+
+}

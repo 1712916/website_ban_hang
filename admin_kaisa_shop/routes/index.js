@@ -69,17 +69,16 @@ router.post('/delete_product/:_id',productController.deleteProduct);
 
 
 //Khách hàng
-//thiếu chi tiết
 
 router.get('/listUser', userController.listUser);
 router.get('/listUser/:page', userController.pageUser);
 router.get('/listUser/profile/:_id', userController.profileUser);
 
-
+router.post('/lock_user/:_id',userController.lockUser);
 
 
 // Đơn hàng
-//thiếu phân trang
+
 router.get('/listOrder', orderController.listOrder);
 router.get('/listOrder/:page', orderController.pageOrder);
 router.get('/listOrder/detail/:_id', orderController.detailOrder);

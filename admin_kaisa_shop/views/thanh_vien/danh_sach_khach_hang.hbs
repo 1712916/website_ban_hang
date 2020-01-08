@@ -64,8 +64,11 @@
                                                <a href="/listUser/profile/{{_id}}"><button class="btn btn-info">Xêm thêm</button></a>
                                             </td>
                                             <td>
-                                                                                  
-                                                <button class="btn btn-success">Mở</button>
+                                                 <form action="/lock_user/{{_id}}" method="POST" >
+                                                     {{lockHelper lock}}
+                                                   
+                                                </form>   
+                                                
                                             </td>
                                             
                                         </tr>

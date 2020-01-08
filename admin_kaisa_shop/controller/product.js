@@ -109,6 +109,7 @@ exports.updateProduct=function(req,res,next){
       nhaSanXuat:req.body.nhaSanXuat,
       moTaSanPham:req.body.moTaSanPham,
       soLuongSanPham:req.body.soLuongSanPham,
+      mauSac:req.body.color,
      configuration:{
                 cpu:req.body.cpu,
                 hardDisk:req.body.hardDisk,
@@ -116,7 +117,7 @@ exports.updateProduct=function(req,res,next){
                 screen:req.body.screen,
                 graphic: req.body.graphic,
                 os:req.body.os,
-                color:req.body.color
+               
     }
     };
 
