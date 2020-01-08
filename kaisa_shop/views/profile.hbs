@@ -60,6 +60,25 @@
                 </ul>
             </div>
         </div>
+         <br></br>
+        <h4>Lịch sử mua hàng</h4>
+        {{#each listOrder}}
+        <tr>
+            <ul>
+                <li>Mã đơn hàng: {{_id}}</li>
+                <li>
+                    {{#each dsSanPham}}
+                    <ul>
+                        <li>Sản phẩm: {{ten}}  |  Số lượng: {{soLuong}}  |  Giá: {{gia}}</li>
+                    </ul>
+                    {{/each}}
+                </li>
+                <li>Thành Tiền: {{tongTien}}</li>
+                <br></br>
+            </ul>
+        </tr>
+        {{/each}}
+
         <div>
             <button type="submit" value="submit"> <a href="/profile_edit">Thay Đổi Thông Tin</a> </button>
             <button type="submit" value="submit"> <a href="/users/tai_khoan/change_password">Đổi mật khẩu</a> </button>

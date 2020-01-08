@@ -4,6 +4,9 @@ const { check, validationResult } = require('express-validator');
 var passport = require('passport')
 var nodemailer = require("nodemailer");
 var User = require('../models/user.model');
+var order = require('../models/order');
+var Cart = require('../models/gioHang');
+
 /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   //res.send('user/');
@@ -21,8 +24,67 @@ router.get('/mua_hang/thanh_toan', function (req, res, next) {
   //res.send('user/san_pham');
   res.render('./user/mua_hang/thanh_toan', { title: 'Thanh Toán Bà Chủ' });
 });
+
+
+router.get('/mua_hang/ket_qua_thanh_toan', function (req, res, next) {
+  if (req.isAuthenticated())
+    res.render('./user/mua_hang/ket_qua_thanh_toan', {});
+  else {
+    res.redirect('../tai_khoan/dang_nhap');
+  }
+});
+
+router.post('/mua_hang/ket_qua_thanh_toan', function (req, res, next) {
+  if (req.isAuthenticated()) {
+    var dssp = new Array();
+    var donHang = new order();
+    var tongtien = 0;
+    console.log(req.user._id);
+    Cart.find({ 'idUser': req.user._id }, function (err, result) {
+      if (err) {
+        console.log(err);
+      }
+      if (result) {
+        result.forEach(element => {
+          console.log(element);
+          dssp.push(element);
+          tongtien += element.gia;
+        });
+
+        donHang.tongTien = tongtien;
+        console.log("Tong tien:" + donHang.tongTien);
+
+        donHang.nguoiMua = req.user._id;
+        donHang.tenNguoiMua = req.body.name;
+        donHang.diaChi = req.body.address;
+        donHang.dienThoai = req.body.phone;
+        donHang.soSanPham = dssp.length;
+        donHang.tinhTrang = "Chờ xử lý";
+        donHang.dsSanPham = dssp;
+        console.log(donHang.dsSanPham);
+
+        order.insertMany(donHang, function (err, result) {
+          if (err) throw err;
+          console.log("1 document inserted\n" + donHang);
+        });
+      }
+
+    })
+
+    res.render('./user/mua_hang/xac_nhan', {});
+  } else {
+    res.redirect('../tai_khoan/dang_nhap');
+  }
+});
+
+
 router.get('/mua_hang/xac_nhan', function (req, res, next) {
-  //res.send('user/san_pham');
+  console.log("Xoa cart hereeeeeee");
+  
+  Cart.deleteMany({ 'idUser': req.user._id }, function (err, obj) {
+    if (err) throw err;
+    console.log(" document(s) deleted");
+  })
   res.render('./user/mua_hang/xac_nhan', { title: 'Xác Nhận Đơn Hàng' });
 });
 
@@ -174,7 +236,7 @@ router.post('/tai_khoan/change_password', function (req, res, next) {
         console.log('2222222222');
         return done(null, false, { message: 'Wrong password' })
       }
-      User.updateOne({ "local.email": req.user.local.email  }, { $set: { "local.password": user.encryptPassword(req.body.newpassword) } }, function (err, result) {
+      User.updateOne({ "local.email": req.user.local.email }, { $set: { "local.password": user.encryptPassword(req.body.newpassword) } }, function (err, result) {
         if (err) {
           console.log(err);
         }

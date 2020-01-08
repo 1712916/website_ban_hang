@@ -6,7 +6,8 @@ const modelSanPham = require('../models/sanPham');
 var User = require('../models/user.model');
 const { check, validationResult } = require('express-validator');
 var passport = require('passport')
-
+var order = require('../models/order');
+var Cart = require('../models/gioHang');
 
 
 router.get('/index', function (req, res, next) {
@@ -59,7 +60,6 @@ router.get('/comfirmation/:token', function (req, res, next) {
   res.redirect('/');
 })
 
-
 router.get('/profile_edit', function (req, res, next) {
   res.render('profile_edit');
 })
@@ -96,13 +96,22 @@ router.post('/profile_edit', function (req, res, next) {
 })
 router.get('/profile', async function (req, res, next) {
   if (req.isAuthenticated()) {
+    var listOrder1;
+    order.find({ "nguoiMua": usercurrent._id }, function (err, result) {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+      listOrder1 = result;
+    })
     User.findOne({ "local.email": usercurrent.local.email }, function (err, result) {
       if (err) {
         console.log(err);
       }
       console.log(result);
       usercurrent = result;
-      res.render('profile', { email: usercurrent.local.email, fullname: usercurrent.local.info.fullname, address: usercurrent.local.info.address, phone: usercurrent.local.info.phone });
+
+      res.render('profile', {listOrder: listOrder1, email: usercurrent.local.email, fullname: usercurrent.local.info.fullname, address: usercurrent.local.info.address, phone: usercurrent.local.info.phone });
     })
   }
 })
