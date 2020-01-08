@@ -5,13 +5,13 @@ const sanPhamSchema=new mongoose.Schema({
     tenSanPham:{type: String},
     loaiSanPham:{type: String},
     giaSanPham:{type: Number},
-    anhSanPham:{type: [String]},
-    nhaSanXuat:{type: [String]},
-    hanSuDung:{type:Date},
+    anhSanPham:{type: String},
+    nhaSanXuat:{type: String},
     moTaSanPham:{type: String},
     tinhTrangSanPham:{type: Boolean},
     ngayTaoSanPham:{type:Date},
-    mauSac:{type: String}
+    mauSac:{type: String},
+    soLuongSanPham:{type: Number}
 },{collection:'sanPham'});
 
 module.exports=mongoose.model('sanPham',sanPhamSchema); 

@@ -1,6 +1,7 @@
 const modelSanPham = require('../models/sanPham');
 const modelComment = require('../models/comment');
 var itemPerPage = 3;
+var pageDisplay = 4;
 
 exports.danhMucSanPham = function (req, res, next) {
   //createPagination();
@@ -31,7 +32,8 @@ exports.danhMucSanPham = function (req, res, next) {
             current: req.params.current_page,
             pages: Math.ceil(count / itemPerPage),
             baseUrl: '/users/san_pham/danh_muc_san_pham',
-            currentUser: req.user
+            currentUser: req.user,
+            pageDisplay: pageDisplay
           });
         }
         else {
@@ -41,7 +43,8 @@ exports.danhMucSanPham = function (req, res, next) {
             current: req.params.current_page,
             pages: Math.ceil(count / itemPerPage),
             baseUrl: '/users/san_pham/danh_muc_san_pham',
-            currentUser: req.user
+            currentUser: req.user,
+            pageDisplay: pageDisplay
           });
         }
       });
@@ -94,7 +97,9 @@ exports.cachPhanLoai = function (req, res, next) {
                 data: product,
                 current: req.params.current_page,
                 pages: Math.ceil(count / itemPerPage),
-                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + phanLoai
+                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + phanLoai,
+                currentUser: req.user,
+                pageDisplay: pageDisplay
               });
             }
           });
@@ -144,7 +149,9 @@ exports.cachPhanLoai = function (req, res, next) {
                 data: product,
                 current: req.params.current_page,
                 pages: Math.ceil(count / itemPerPage),
-                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + phanLoai
+                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + phanLoai,
+                currentUser: req.user,
+                pageDisplay: pageDisplay
               });
               return;
             }
@@ -178,11 +185,11 @@ exports.cachPhanLoai = function (req, res, next) {
         }
       }).skip(req.params.current_page * itemPerPage - itemPerPage).limit(itemPerPage);
     }
-    modelSanPham.find({ "color": keyPhanLoai })
+    modelSanPham.find({ "mauSac": keyPhanLoai })
       .skip(req.params.current_page * itemPerPage - itemPerPage)
       .limit(itemPerPage)
       .exec(function (err, product) {
-        modelSanPham.find({ "color": keyPhanLoai })
+        modelSanPham.find({ "mauSac": keyPhanLoai })
           .count().exec(function (err, count) {
             if (err) {
               console.log("Thông báo: Không kết nối được với chi tiết sản phẩm!\n");
@@ -194,7 +201,9 @@ exports.cachPhanLoai = function (req, res, next) {
                 data: product,
                 current: req.params.current_page,
                 pages: Math.ceil(count / itemPerPage),
-                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + phanLoai
+                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + phanLoai,
+                currentUser: req.user,
+                pageDisplay: pageDisplay
               });
               return;
             }
@@ -223,7 +232,9 @@ exports.cachPhanLoai = function (req, res, next) {
                 data: product,
                 current: req.params.current_page,
                 pages: Math.ceil(count / itemPerPage),
-                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + min + '-' + max
+                baseUrl: '/users/san_pham/danh_muc_san_pham/' + cachPhanLoai + '/' + min + '-' + max,
+                currentUser: req.user,
+                pageDisplay: pageDisplay
               });
               return;
             }
@@ -237,7 +248,6 @@ exports.cachPhanLoai = function (req, res, next) {
 
 exports.sapXep = function (req, res, next) {
   var cachSapXep = req.params.cach_sap_xep;
-  console.log('sap xep z den a');
   if (cachSapXep == 'a_den_z') {
     modelSanPham.find({})
       .sort({ "tenSanPham": 1 })
@@ -255,7 +265,9 @@ exports.sapXep = function (req, res, next) {
               data: product,
               current: req.params.current_page,
               pages: Math.ceil(count / itemPerPage),
-              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep
+              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep,
+              currentUser: req.user,
+              pageDisplay: pageDisplay
             });
             return;
           }
@@ -280,7 +292,9 @@ exports.sapXep = function (req, res, next) {
               data: product,
               current: req.params.current_page,
               pages: Math.ceil(count / itemPerPage),
-              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep
+              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep,
+              currentUser: req.user,
+              pageDisplay: pageDisplay
             });
             return;
           }
@@ -305,7 +319,9 @@ exports.sapXep = function (req, res, next) {
               data: product,
               current: req.params.current_page,
               pages: Math.ceil(count / itemPerPage),
-              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep
+              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep,
+              currentUser: req.user,
+              pageDisplay: pageDisplay
             });
             return;
           }
@@ -330,7 +346,9 @@ exports.sapXep = function (req, res, next) {
               data: product,
               current: req.params.current_page,
               pages: Math.ceil(count / itemPerPage),
-              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep
+              baseUrl: '/users/san_pham/danh_muc_san_pham/sap_xep/' + cachSapXep,
+              currentUser: req.user,
+              pageDisplay: pageDisplay
             });
             return;
           }
@@ -355,7 +373,7 @@ exports.chiTietSanPham = function (req, res, next) {
     } else {
       console.log("Thông báo:Kết nối thành công với chi tiết sản phẩm!\n");
       console.log(product);
-
+      
       modelComment.find({ "idSP": id })
         .skip(req.params.current_page * commentPerPage - commentPerPage)
         .limit(itemPerPage)
@@ -368,7 +386,8 @@ exports.chiTietSanPham = function (req, res, next) {
               currentPage: req.params.current_page,
               commentPages: Math.ceil(count / commentPerPage),
               baseUrl: '/chi_tiet_sp/' + id,
-              currentUser: req.user
+              currentUser: req.user,
+              pageDisplay: pageDisplay
             });
           });
         });
@@ -402,7 +421,8 @@ exports.updateChiTietSanPham = function (req, res, next) {
               currentPage: req.params.current_page,
               commentPages: Math.ceil(count / commentPerPage),
               baseUrl: '/chi_tiet_sp/' + id,
-              currentUser: req.user
+              currentUser: req.user,
+              pageDisplay: pageDisplay
             });
           });
         });

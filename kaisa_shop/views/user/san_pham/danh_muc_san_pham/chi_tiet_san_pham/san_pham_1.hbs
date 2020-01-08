@@ -91,6 +91,10 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
 									<input name="gia" type="number" value={{data.giaSanPham}} style="display: none" />
 									<input name="soluong" type="number" style="display: none" />
 									<button class="btn bg-primary btn-primary" type="submit" onclick="
+										if ({{data.soLuongSanPham}} == 0) {
+											alert('{{data.tenSanPham}} không còn đủ số lượng');
+											return false;
+										}
 										this.parentNode.firstElementChild.value = '{{currentUser._id}}';
 										this.parentNode.children[4].value = document.getElementById('sst').value;
 										return true;
@@ -273,7 +277,7 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
 								{{/each}}
 							</div>
 							<div class="container">
-								<ul class="pagination" id="pagination">
+								<ul class="pagination" id="pagination2">
 									{{#ifCond commentPages '>' 0}}
 									{{#ifCond currentPage '==' 1}}
 									<li class="page-item disabled"><a class="page-link">prev</a></li>
@@ -282,8 +286,8 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
 											href={{concat baseUrl '/' (math currentPage '-' 1)}}>prev</a></li>
 									{{/ifCond}}
 
-									{{#ifCond currentPage '<=' (math (math (math commentPages '-' 1) '/' 5) '*' 5)}}
-									{{#repeat count=5 start=(math (math (math (math currentPage '-' 1) '/' 5) '*' 5) '+' 1)}}
+									{{#ifCond currentPage '<=' (math (math (math commentPages '-' 1) '/' pageDisplay) '*' pageDisplay)}}
+									{{#repeat count=pageDisplay start=(math (math (math (math currentPage '-' 1) '/' pageDisplay) '*' pageDisplay) '+' 1)}}
 									{{#ifCond currentPage '==' @index}}
 									<li class="active page-item"><a class="page-link"
 											href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
@@ -294,8 +298,8 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
 									{{/repeat}}
 
 									{{else}}
-									{{#ifCond (math commentPages '%' 5) '==' 0}}
-									{{#repeat count=5 start=(math (math (math (math currentPage '-' 1) '/' 5) '*' 5) '+' 1)}}
+									{{#ifCond (math commentPages '%' pageDisplay) '==' 0}}
+									{{#repeat count=pageDisplay start=(math (math (math (math currentPage '-' 1) '/' pageDisplay) '*' pageDisplay) '+' 1)}}
 									{{#ifCond currentPage '==' @index}}
 									<li class="active page-item"><a class="page-link"
 											href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
@@ -306,7 +310,7 @@ var soLuotXem = parseInt(localStorage.getItem('{{baseUrl}}'));
 									{{/repeat}}
 
 									{{else}}
-									{{#repeat count=(math commentPages '%' 5) start=(math (math (math (math currentPage '-' 1) '/' 5) '*' 5) '+' 1)}}
+									{{#repeat count=(math commentPages '%' pageDisplay) start=(math (math (math (math currentPage '-' 1) '/' pageDisplay) '*' pageDisplay) '+' 1)}}
 									{{#ifCond currentPage '==' @index}}
 									<li class="active page-item"><a class="page-link"
 											href={{concat baseUrl '/' @index}}>{{@index}}</a></li>

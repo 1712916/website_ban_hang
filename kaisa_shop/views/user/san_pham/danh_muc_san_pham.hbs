@@ -96,7 +96,7 @@
                       for="blackred"><a href="/users/san_pham/danh_muc_san_pham/mau_sac/black_with_red/1">Black with red</a></label></li>
                   <li class="filter-list"><input class="pixel-radio" type="radio" id="gold" name="color"><label
                       for="gold"><a
-                        href="/users/san_pham/danh_muc_san_pham/mau_sac/gold/1">Gold</a><span>(19)</span></label></li>
+                        href="/users/san_pham/danh_muc_san_pham/mau_sac/gold/1">Gold</a></label></li>
                   <li class="filter-list"><input class="pixel-radio" type="radio" id="spacegrey" name="color"><label
                       for="spacegrey"><a href="/users/san_pham/danh_muc_san_pham/mau_sac/space_grey/1">Space grey</a></label></li>
                 </ul>
@@ -218,6 +218,10 @@
                               <input name="gia" type="number" value={{giaSanPham}} style="display: none" />
                               <input name="soluong" type="number" value=1 style="display: none" />
                               <button type="submit" onclick="
+                              if ({{soLuongSanPham}} == 0) {
+                                alert('{{tenSanPham}} hết hàng');
+                                return false;
+                              }
                               this.parentNode.firstElementChild.value = document.getElementById('idCurrentUser').innerHTML;
                               return true;
                             ">
@@ -231,6 +235,7 @@
                         <p>{{loaiSanPham}}</p>
                         <h4 class="card-product__title"><a href="/chi_tiet_sp/{{_id}}/1">{{tenSanPham}}</a></h4>
                         <p class="card-product__price">VND {{giaSanPham}}</p>
+                        <p>{{moTaSanPham}}</p>
                       </div>
                     </div>
                   </div>
@@ -294,8 +299,8 @@
                 {{/repeat}}
               {{/ifCond}} --}}
 
-              {{#ifCond current '<=' (math (math (math pages '-' 1) '/' 5) '*' 5)}}
-              {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+              {{#ifCond current '<=' (math (math (math pages '-' 1) '/' pageDisplay) '*' pageDisplay)}}
+              {{#repeat count=pageDisplay start=(math (math (math (math current '-' 1) '/' pageDisplay) '*' pageDisplay) '+' 1)}}
               {{#ifCond current '==' @index}}
               <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
               {{else}}
@@ -304,8 +309,8 @@
               {{/repeat}}
 
               {{else}}
-              {{#ifCond (math pages '%' 5) '==' 0}}
-              {{#repeat count=5 start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+              {{#ifCond (math pages '%' pageDisplay) '==' 0}}
+              {{#repeat count=pageDisplay start=(math (math (math (math current '-' 1) '/' pageDisplay) '*' pageDisplay) '+' 1)}}
               {{#ifCond current '==' @index}}
               <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
               {{else}}
@@ -314,7 +319,7 @@
               {{/repeat}}
 
               {{else}}
-              {{#repeat count=(math pages '%' 5) start=(math (math (math (math current '-' 1) '/' 5) '*' 5) '+' 1)}}
+              {{#repeat count=(math pages '%' pageDisplay) start=(math (math (math (math current '-' 1) '/' pageDisplay) '*' pageDisplay) '+' 1)}}
               {{#ifCond current '==' @index}}
               <li class="active page-item"><a class="page-link" href={{concat baseUrl '/' @index}}>{{@index}}</a></li>
               {{else}}

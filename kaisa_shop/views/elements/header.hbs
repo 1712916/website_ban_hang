@@ -1,13 +1,5 @@
 <!--================ Start Header Menu Area =================-->
 <header class="header_area">
-  <script type="text/javascript">
-    if (sessionStorage.getItem('soLuongGioHang') == null) {
-      document.getElementById('soLuongGioHang').innerHTML = '0';
-      sessionStorage.setItem('soLuongGioHang', '0');
-    }
-    else
-      document.getElementById('soLuongGioHang').innerHTML = sessionStorage.getItem('soLuongGioHang');
-  </script>
   <div class="main_menu">
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container">
@@ -65,7 +57,7 @@
 
           <ul class="nav-shop">
             <li class="nav-item"><a href="/users/tim_kiem">
-                  <button><i class="ti-search"></i></button>
+                <button><i class="ti-search"></i></button>
               </a></li>
             <li class="nav-item"><a href="/users/mua_hang/gio_hang"><button><i class="ti-shopping-cart"></i><span
                     class="nav-shop__circle" id="soLuongGioHang"></span></button> </a></li>
@@ -79,6 +71,20 @@
       </div>
     </nav>
   </div>
+  <script type="text/javascript">
+    {{#ifCond currentUser '==' undefined}}
+    if (sessionStorage.getItem('soLuongGioHang') == null) {
+      document.getElementById('soLuongGioHang').innerHTML = '0';
+      sessionStorage.setItem('soLuongGioHang', '0');
+    }
+    else {
+      document.getElementById('soLuongGioHang').innerHTML = sessionStorage.getItem('soLuongGioHang');
+    }
+    {{else}}
+      document.getElementById('soLuongGioHang').innerHTML = '{{cartData.length}}';
+    {{/ifCond}}
+
+  </script>
   <script href=".../routes/users.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
